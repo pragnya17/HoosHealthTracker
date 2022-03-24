@@ -14,3 +14,9 @@ def profile():
 @app.route("/current_week")
 def current_week():
     return "Weekly progress"
+
+
+# For debugging - just run file from terminal and any saved changes will be updated in browser
+# without having to restart the program.
+if __name__ == '__main__':
+    app.run(debug=True)
