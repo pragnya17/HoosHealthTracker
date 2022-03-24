@@ -28,7 +28,4 @@ def get_users():
     # Always commit after running SQL query so the changes are saved
     connection.commit()
 
-    # Close cursor to release memory
-    cursor.close()
-
     return result
