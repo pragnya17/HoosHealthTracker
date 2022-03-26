@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request
 
 app = Flask(__name__)
 
@@ -10,6 +10,14 @@ def main():
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
+
+@app.route("/entry", methods=["POST", "GET"])
+def entry():
+    if request.method == "POST":
+        # Example of retrieving data from form
+        date = request.form['date']
+        print(date)
+    return render_template("entry.html")
 
 @app.route("/current_week")
 def current_week():
