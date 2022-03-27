@@ -1,5 +1,5 @@
 import pymysql.cursors
-from secrets import secrets
+from db_secrets import secrets
 
 # Connect to the database
 connection = pymysql.connect(host= secrets['host'],
