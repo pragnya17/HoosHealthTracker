@@ -20,6 +20,62 @@ def get_users_emails():
 
     return result
 
+# store to EmotionEntry
+def storeEmotionEntry(user_id, date, comment, emotion):
+
+    with connection.cursor() as cursor:
+        query = "insert into EmotionEntry (user_id, entry_date, comments, mood) VALUES(%s, %s, %s, %s)"
+        val = (user_id, date, comment, emotion)
+        cursor.execute(query, val)
+        # print("works")
+        # yay inserts into emotion entry!!
+        
+    connection.commit()
+
+# store to SleepEntry
+def storeSleepEntry(user_id, date, comment, sleep):
+
+    with connection.cursor() as cursor:
+        query = "insert into SleepEntry (user_id, entry_date, comments, duration) VALUES(%s, %s, %s, %s)"
+        val = (user_id, date, comment, sleep)
+        cursor.execute(query, val)
+        # print("works")
+        
+    connection.commit()
+
+# store to ExerciseEntry
+def storeExerciseEntry(user_id, date, comment, intensity, duration, type):
+
+    with connection.cursor() as cursor:
+        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration, type) VALUES(%s, %s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, intensity, duration, type)
+        cursor.execute(query, val)
+        # print("works")
+        
+    connection.commit()
+
+# store to FoodEntry
+def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
+
+    with connection.cursor() as cursor:
+        storeFoodEntryNutrition(fat, carbs, protein, calories)
+        
+        query = "insert into FoodEntry (user_id, entry_date, comments, total_calories, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, calories, fat, carbs, protein, weight)
+        cursor.execute(query, val)
+
+        # print("works")
+        
+    connection.commit()
+
+def storeFoodEntryNutrition(fat, carbs, protein, calories):
+    with connection.cursor() as cursor:
+        query = "insert into FoodEntryNutrition (total_fat, total_carbs, total_protein, calories) VALUES(%s, %s, %s, %s)"
+        val = (fat, carbs, protein, calories)
+        cursor.execute(query, val)
+        # print("works")
+        
+    connection.commit()
 
 def add_user(first_name, last_name, height, date_of_birth, email, password):
     with connection.cursor() as cursor:
