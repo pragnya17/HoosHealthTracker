@@ -3,12 +3,12 @@ from db_secrets import secrets
 
 # Connect to the database
 connection = pymysql.connect(host= secrets['host'],
-                             user= secrets['user'],
+                             user= secrets['username'],
                              password= secrets['password'],
                              database= secrets['database'],
                              cursorclass=pymysql.cursors.DictCursor)
 
-def get_users():
+def get_users_emails():
     """
     Example function for querying data.
     """
@@ -16,7 +16,7 @@ def get_users():
     with connection.cursor() as cursor:
 
         # Write query and execute it
-        query = "SELECT * FROM UserProfile;"
+        query = "SELECT * FROM UserProfileEmails;"
         cursor.execute(query)
 
         # Retrieve all rows from query 
