@@ -4,7 +4,7 @@ import hashlib
 
 # Connect to the database
 connection = pymysql.connect(host= secrets['host'],
-                             user= secrets['username'],
+                             user= secrets['user'],
                              password= secrets['password'],
                              database= secrets['database'],
                              cursorclass=pymysql.cursors.DictCursor)
@@ -70,8 +70,8 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
 
 def storeFoodEntryNutrition(fat, carbs, protein, calories):
     with connection.cursor() as cursor:
-        query = "insert into FoodEntryNutrition (total_fat, total_carbs, total_protein, calories) VALUES(%s, %s, %s, %s)"
-        val = (fat, carbs, protein, calories)
+        query = "insert into FoodEntryNutrition (total_calories, total_fat, total_carbs, total_protein) VALUES(%s, %s, %s, %s)"
+        val = (calories, fat, carbs, protein)
         cursor.execute(query, val)
         # print("works")
         
