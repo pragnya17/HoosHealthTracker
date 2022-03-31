@@ -68,6 +68,10 @@ def profile():
 
 @app.route("/entry", methods=["POST", "GET"])
 def entry():
+    global user_id
+
+    if user_id == -1:
+        return redirect(url_for('login'))
     if request.method == "POST":
         # Example of retrieving data from form (need both for every entry)
         date = request.form['date']
@@ -80,7 +84,7 @@ def entry():
         # exercise entry
         intensity = request.form['exercise_intensity']
         duration = request.form['exercise_duration']
-        type = request.form['exercise_type']
+        # type = request.form['exercise_type'] # not working
         # food entry/food entry nutritions
         calories = request.form['calories']
         fat = request.form['fat']
@@ -88,14 +92,13 @@ def entry():
         protein = request.form['protein']
         weight = request.form['weight']
 
-
-        user_id = 8
-
-        # storeEmotionEntry(user_id, date, comment, mood)
-        # storeSleepEntry(user_id, date, comment, sleep)
-        # storeExerciseEntry(user_id, date, comment, intensity, duration, type)
+        # try:
+        storeEmotionEntry(user_id, date, comment, mood)
+        storeSleepEntry(user_id, date, comment, sleep)
+        storeExerciseEntry(user_id, date, comment, intensity, duration)
         storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight)
-
+        # except:
+        #     return render_template("An exception occurred, try again")
 
         # print(get_users())
         # print(date)

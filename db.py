@@ -4,10 +4,11 @@ import hashlib
 
 # Connect to the database
 connection = pymysql.connect(host= secrets['host'],
-                             user= secrets['username'],
+                             user= secrets['user'],
                              password= secrets['password'],
                              database= secrets['database'],
                              cursorclass=pymysql.cursors.DictCursor)
+
 
 def get_users_emails():
     with connection.cursor() as cursor:
@@ -19,6 +20,7 @@ def get_users_emails():
     connection.commit()
 
     return result
+
 
 # store to EmotionEntry
 def storeEmotionEntry(user_id, date, comment, emotion):
@@ -32,6 +34,7 @@ def storeEmotionEntry(user_id, date, comment, emotion):
         
     connection.commit()
 
+
 # store to SleepEntry
 def storeSleepEntry(user_id, date, comment, sleep):
 
@@ -43,16 +46,18 @@ def storeSleepEntry(user_id, date, comment, sleep):
         
     connection.commit()
 
+
 # store to ExerciseEntry
-def storeExerciseEntry(user_id, date, comment, intensity, duration, type):
+def storeExerciseEntry(user_id, date, comment, intensity, duration):
 
     with connection.cursor() as cursor:
-        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration, type) VALUES(%s, %s, %s, %s, %s, %s)"
-        val = (user_id, date, comment, intensity, duration, type)
+        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration) VALUES(%s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, intensity, duration)
         cursor.execute(query, val)
         # print("works")
         
     connection.commit()
+
 
 # store to FoodEntry
 def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
@@ -60,13 +65,14 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
     with connection.cursor() as cursor:
         storeFoodEntryNutrition(fat, carbs, protein, calories)
         
-        query = "insert into FoodEntry (user_id, entry_date, comments, total_calories, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
-        val = (user_id, date, comment, calories, fat, carbs, protein, weight)
+        query = "insert into FoodEntry (user_id, entry_date, comments, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, fat, carbs, protein, weight)
         cursor.execute(query, val)
 
         # print("works")
         
     connection.commit()
+
 
 def storeFoodEntryNutrition(fat, carbs, protein, calories):
     with connection.cursor() as cursor:
@@ -76,6 +82,7 @@ def storeFoodEntryNutrition(fat, carbs, protein, calories):
         # print("works")
         
     connection.commit()
+
 
 def add_user(first_name, last_name, height, date_of_birth, email, password):
     with connection.cursor() as cursor:
