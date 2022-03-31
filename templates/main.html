@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1 class="text-center mt-3">Main Page</h1>
+
+<div class="row mt-4 text-center">
+    <a href="{{ url_for('profile') }}">Profile</a>
+    <a href="{{ url_for('current_week') }}">Current Week's progress</a>
+</div>
+
+{% endblock %}
