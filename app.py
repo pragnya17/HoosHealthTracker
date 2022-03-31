@@ -4,7 +4,6 @@ from db_secrets import secrets
 import db
 import hashlib
 
-
 app = Flask(__name__)
 
 user_id = -1 # -1 means no is logged in
@@ -64,6 +63,14 @@ def profile():
     else:
         return redirect(url_for('login'))
 
+
+@app.route("/entry", methods=["POST", "GET"])
+def entry():
+    if request.method == "POST":
+        # Example of retrieving data from form
+        date = request.form['date']
+        print(date)
+    return render_template("entry.html")
 
 @app.route("/current_week")
 def current_week():
