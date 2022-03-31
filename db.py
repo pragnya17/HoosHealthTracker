@@ -69,11 +69,11 @@ def storeSleepEntry(user_id, date, comment, sleep):
 
 
 # store to ExerciseEntry
-def storeExerciseEntry(user_id, date, comment, intensity, duration):
+def storeExerciseEntry(user_id, date, comment, intensity, duration, type):
 
     with connection.cursor() as cursor:
-        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration) VALUES(%s, %s, %s, %s, %s)"
-        val = (user_id, date, comment, intensity, duration)
+        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration, type) VALUES(%s, %s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, intensity, duration, type)
         cursor.execute(query, val)
         # print("works")
         
@@ -84,10 +84,10 @@ def storeExerciseEntry(user_id, date, comment, intensity, duration):
 def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
 
     with connection.cursor() as cursor:
-        storeFoodEntryNutrition(fat, carbs, protein)
+        storeFoodEntryNutrition(calories, fat, carbs, protein)
         
-        query = "insert into FoodEntry (user_id, entry_date, comments, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-        val = (user_id, date, comment, fat, carbs, protein, weight)
+        query = "insert into FoodEntry (user_id, entry_date, comments, total_calories, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, calories, fat, carbs, protein, weight)
         cursor.execute(query, val)
 
         # print("works")
@@ -95,10 +95,10 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
     connection.commit()
 
 
-def storeFoodEntryNutrition(fat, carbs, protein):
+def storeFoodEntryNutrition(calories, fat, carbs, protein):
     with connection.cursor() as cursor:
-        query = "insert into FoodEntryNutrition (total_fat, total_carbs, total_protein) VALUES(%s, %s, %s)"
-        val = (fat, carbs, protein) # using calculated calories as generated column, no need to pass in here
+        query = "insert into FoodEntryNutrition (total_calories, total_fat, total_carbs, total_protein) VALUES(%s, %s, %s, %s)"
+        val = (calories, fat, carbs, protein)
         cursor.execute(query, val)
         # print("works")
         

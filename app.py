@@ -82,6 +82,7 @@ def entry():
         # exercise entry
         intensity = request.form['exercise_intensity']
         duration = request.form['exercise_duration']
+        type = request.form['exercise_type']
         # type = request.form['exercise_type'] # not working
         # food entry/food entry nutritions
         calories = request.form['calories']
@@ -93,7 +94,7 @@ def entry():
         # try:
         db.storeEmotionEntry(user_id, date, comment, mood)
         db.storeSleepEntry(user_id, date, comment, sleep)
-        db.storeExerciseEntry(user_id, date, comment, intensity, duration)
+        db.storeExerciseEntry(user_id, date, comment, intensity, duration, type)
         db.storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight)
         # except:
         #     return render_template("An exception occurred, try again")
