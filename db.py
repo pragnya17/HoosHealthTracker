@@ -29,3 +29,31 @@ def get_users():
     connection.commit()
 
     return result
+
+
+def get_foods(food_name):
+    with connection.cursor() as cursor:
+
+        query = "SELECT * FROM (BrandedFood NATURAL JOIN Food) WHERE description LIKE %s;"
+        cursor.execute(query, '%' + food_name + '%')
+
+        result = cursor.fetchall()
+    
+    return result
+
+def get_food(id):
+    with connection.cursor() as cursor:
+
+        query = "SELECT * FROM (BrandedFood NATURAL JOIN Food) WHERE fdc_id = %s;"
+        cursor.execute(query, id)
+
+        result = cursor.fetchall()
+    
+    return result[0]
+
+def get_nutrition(id):
+    with connection.cursor() as cursor:
+        query = "SELECT protein, fat, carb FROM FoodNutrient WHERE fdc_id = %s;"
+        cursor.execute(query, id)
+        result = cursor.fetchall()
+    return result[0]
