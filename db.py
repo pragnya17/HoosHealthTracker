@@ -63,7 +63,7 @@ def storeExerciseEntry(user_id, date, comment, intensity, duration):
 def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
 
     with connection.cursor() as cursor:
-        storeFoodEntryNutrition(fat, carbs, protein, calories)
+        storeFoodEntryNutrition(fat, carbs, protein)
         
         query = "insert into FoodEntry (user_id, entry_date, comments, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s)"
         val = (user_id, date, comment, fat, carbs, protein, weight)
@@ -74,10 +74,10 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
     connection.commit()
 
 
-def storeFoodEntryNutrition(fat, carbs, protein, calories):
+def storeFoodEntryNutrition(fat, carbs, protein):
     with connection.cursor() as cursor:
-        query = "insert into FoodEntryNutrition (total_fat, total_carbs, total_protein, calories) VALUES(%s, %s, %s, %s)"
-        val = (fat, carbs, protein, calories)
+        query = "insert into FoodEntryNutrition (total_fat, total_carbs, total_protein) VALUES(%s, %s, %s)"
+        val = (fat, carbs, protein) # using calculated calories as generated column, no need to pass in here
         cursor.execute(query, val)
         # print("works")
         
