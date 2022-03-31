@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1 class="text-center p-2">Results for: {{ food_to_search }} </h1>
+<div class="container-lg">
+    <ul class="list-group">
+    {% for food in food_results %}
+
+    <li class="list-group-item"><a href="/nutrition_info/ {{ food['fdc_id'] }}">{{ food['description'] }}</a></li>
+
+    {% endfor %}
+    </ul>
+
+    <div class="mt-2">
+        <small>
+            Note: All data in our nutritional library come from the <a target="_new" href="https://fdc.nal.usda.gov/download-datasets.html"> USDA FoodDataCentral</a> (Branded Food, October 2020).
+        </small>
+    </div>
+</div>
+{% endblock %}

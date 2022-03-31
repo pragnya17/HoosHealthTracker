@@ -22,6 +22,27 @@ def get_users_emails():
     return result
 
 
+def get_foods(food_name):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM (BrandedFood NATURAL JOIN Food) WHERE description LIKE %s;"
+        cursor.execute(query, '%' + food_name + '%')
+        result = cursor.fetchall()
+    return result
+
+def get_food(id):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM (BrandedFood NATURAL JOIN Food) WHERE fdc_id = %s;"
+        cursor.execute(query, id)
+        result = cursor.fetchall()
+    return result[0]
+
+def get_nutrients(id):
+    with connection.cursor() as cursor:
+        query = "SELECT protein, fat, carb FROM FoodNutrient WHERE fdc_id = %s;"
+        cursor.execute(query, id)
+        result = cursor.fetchall()
+    return result[0]
+
 # store to EmotionEntry
 def storeEmotionEntry(user_id, date, comment, emotion):
 
@@ -110,3 +131,4 @@ def get_user(user_id):
 
     connection.commit()
     return result[0]["first_name"], result[0]["last_name"], result[0]["height"], result[0]["date_of_birth"] # 0 index to access the first element of the result list
+
