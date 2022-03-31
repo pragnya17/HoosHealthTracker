@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-lg w-50" style="height: 80vh;">
+    <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+        <h3 class="text-center">Search foods in our nutritional library:</h3>
+        <form action="/search_result" class="input-group" method="post">
+            <input type="search" class="form-control rounded" name="food_to_search" placeholder="Search...">
+            <button type="submit" value="submit" class="btn btn-outline-primary">Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

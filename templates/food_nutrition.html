@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container-lg">
+    <div class="p-2 mt-3">
+    <table class="table table-hover">
+        <h3>Nutrition Facts for {{ food['description'] }} </h3>
+        <caption>Ingredients: {{ food['ingredients'] }} </caption>
+        <h6>Serving size: {{ ss }} </h6>
+        <tr>
+            <th scope="col">Nutrient</th>
+            <th scope="col">Amount/serving</th>
+            <th scope="col">% Daily Value</th>
+        </tr>
+        <tr>
+            <td>Calories</td>
+            <td>{{ nutrients['calories'] }}</td>
+            <td>{{ daily_values['calories'] }}%</td>
+        </tr>
+        <tr>
+            <td>Total Fat (g)</td>
+            <td>{{ nutrients['fat'] }}</td>
+            <td>{{ daily_values['fat'] }}%</td> 
+        </tr>
+        <tr>
+            <td>Total Carbohydrate (g)</td>
+            <td>{{ nutrients['carb'] }}</td>
+            <td>{{ daily_values['carb'] }}%</td> 
+        </tr>
+        <tr>
+            <td>Protein (g)</td>
+            <td>{{ nutrients['protein'] }}</td>
+            <td>{{ daily_values['protein'] }}%</td>
+        </tr>
+        </thead>
+    </table>
+    </div>
+
+    <small>Note: All data in our nutritional library come from the <a target="_new" href="https://fdc.nal.usda.gov/download-datasets.html"> USDA FoodDataCentral</a> (Branded Food, October 2020).
+     % Daily values based on USDA's guidelines for a 2000 calorie diet. Recommended percentages may vary per individual.
+    </small>
+</div>
+{% endblock %}
