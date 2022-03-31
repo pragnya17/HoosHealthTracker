@@ -2,9 +2,17 @@
 
 {% block content %}
     <div>
-        Current profile
-        Age:
-        Name:
-        Email:
+        <div class="row pl-5 mt-4 text-center">
+            First Name: {{ first_name }}
+        </div>
+        <div class="row pl-5 mt-4 text-center">
+            Last Name: {{ last_name }}
+        </div>
+        <div class="row pl-5 mt-4 text-center">
+            Height: {{ height }}
+        </div>
+        <div class="row pl-5 mt-4 text-center">
+            Date of Birth: {{ date_of_birth }}
+        </div>
     </div>
 {% endblock %}
