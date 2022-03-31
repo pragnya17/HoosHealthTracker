@@ -72,6 +72,7 @@ def entry():
         print(date)
     return render_template("entry.html")
 
+
 @app.route("/current_week")
 def current_week():
     if user_id != -1:
