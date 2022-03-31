@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template, request, redirect, url_for
 import db
+import nutr_calc
 
 
 app = Flask(__name__)
@@ -41,16 +42,32 @@ def search_result():
 
 @app.route("/nutrition_info/<food_id>")
 def nutrition_info(food_id):
+    # Retrieve food and nutrient info from database
     food = db.get_food(food_id)
-    nutrition = db.get_nutrition(food_id)
-    nutrition['calories'] = round(9*nutrition['fat'] + 4*(nutrition['carb'] + nutrition['protein']))
-    daily_values = {
-        'calories': round(nutrition['calories']/2000 * 100),
-        'fat': round(nutrition['fat']/65 * 100),
-        'carb': round(nutrition['carb']/300 * 100),
-        'protein': round(nutrition['protein']/50 * 100)
-    }
-    return render_template("food_nutrition.html", food=food, nutrition=nutrition, daily_values=daily_values)
+    nutrients = db.get_nutrients(food_id)
+
+    # The data has some repetitiveness in how it displays serving size in
+    # the household_serving_fulltext and serving_size columns, so here we eliminate that
+    if str(int(food['serving_size'])) in food['household_serving_fulltext'] or str(food['serving_size']) in food['household_serving_fulltext']:
+        ss = food['household_serving_fulltext']
+    else:
+        ss = food['household_serving_fulltext'] + " (" + str(food['serving_size']) + "g)"
+
+    # Our food info gives a "household" serving size, but our nutrient info is per 100g
+    # So here we update the nutrients to reflect the household serving size
+    # If not possible to convert between the two serving sizes, we just update the displayed serving size to 100g
+    if food['serving_size_unit'] == 'g':
+        nutrients = nutr_calc.get_updated_nutrients(nutrients, food['serving_size'])
+    else:
+        ss = "100g"
+
+    # Compute and store number of calories derived from macronutrients
+    nutrients['calories'] = nutr_calc.get_calories(nutrients['fat'], nutrients['carb'], nutrients['protein'])
+    
+    # Compute % daily values for each macronutrient
+    daily_values = nutr_calc.get_daily_values(nutrients)
+
+    return render_template("food_nutrition.html", food=food, nutrients=nutrients, daily_values=daily_values, ss=ss)
  
 
 @app.route("/current_week")

@@ -51,9 +51,10 @@ def get_food(id):
     
     return result[0]
 
-def get_nutrition(id):
+def get_nutrients(id):
     with connection.cursor() as cursor:
         query = "SELECT protein, fat, carb FROM FoodNutrient WHERE fdc_id = %s;"
         cursor.execute(query, id)
         result = cursor.fetchall()
+    
     return result[0]
