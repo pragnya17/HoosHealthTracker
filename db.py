@@ -69,11 +69,11 @@ def storeSleepEntry(user_id, date, comment, sleep):
 
 
 # store to ExerciseEntry
-def storeExerciseEntry(user_id, date, comment, intensity, duration):
+def storeExerciseEntry(user_id, date, comment, intensity, duration, type):
 
     with connection.cursor() as cursor:
-        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration) VALUES(%s, %s, %s, %s, %s)"
-        val = (user_id, date, comment, intensity, duration)
+        query = "insert into ExerciseEntry (user_id, entry_date, comments, intensity, duration, type) VALUES(%s, %s, %s, %s, %s, %s)"
+        val = (user_id, date, comment, intensity, duration, type)
         cursor.execute(query, val)
         # print("works")
         
