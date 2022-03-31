@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1 class="text-center mt-3">Sign Up</h1>
+<div class="container-lg mx-auto mt-4 w-50">
+    <form method="post">
+        <div class="row mt-3">
+            <label for="first_name">First Name</label>
+            <input class="form-control" type="text" name="first_name" id="first_name"></input>
+        </div>
+
+        <div class="row mt-3">
+            <label for="last_name">Last Name</label>
+            <input class="form-control" type="text" name="last_name" id="last_name"></input>
+        </div>
+
+        <div class="row mt-3">
+            <label for="height">Height (inches)</label>
+            <input class="form-control" type="number" name="height" id="height"></input>
+        </div>
+
+        <div class="row mt-3">
+            <label for="date_of_birth">Date of Birth</label>
+            <input class="form-control" type="date" name="date_of_birth" id="date_of_birth"></input>
+        </div>
+
+        <div class="row mt-3">
+            <label for="email">Email</label>
+            <input class="form-control" type="text" name="email" id="email"></input>
+        </div>
+
+        <div class="row mt-3">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password"></input>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col text-center">
+                <input type="submit" value="SIGN UP" name="btnAction" class="btn btn-primary" title="submit entry">
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col text-center">
+                <a href="{{ url_for('login') }}">Go back to login</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
