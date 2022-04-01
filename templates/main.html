@@ -1,13 +1,21 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h1 class="text-center mt-3">Main Page</h1>
+<h2 class="text-center mt-5"> Welcome to HoosHealth!</h2>
 
-<div class="row mt-4 text-center">
-    <a href="{{ url_for('profile') }}">Profile</a>
-    <a href="{{ url_for('current_week') }}">Current Week's progress</a>
-    <a href="{{ url_for('entry') }}">Enter info about daily progress</a>
-    <a href="{{ url_for('food_search') }}">Food search</a>"
-</div>
+
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+
+                <div class="row mt-8 text-center">
+                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('profile') }}">Profile </a></button> <p></p>
+                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('current_week') }}">Current Week's progress </a></button><p></p>
+                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('entry') }}">Enter info about daily progress </a></button><p></p>
+                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('food_search') }}"> Food Search </a></button>
+
+                
+                </div></div></div></div>
 
 {% endblock %}
