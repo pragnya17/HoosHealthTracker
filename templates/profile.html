@@ -1,18 +1,26 @@
 {% extends "index.html" %}
 
 {% block content %}
-    <div>
-        <div class="row pl-5 mt-4 text-center">
-            First Name: {{ first_name }}
-        </div>
-        <div class="row pl-5 mt-4 text-center">
-            Last Name: {{ last_name }}
-        </div>
-        <div class="row pl-5 mt-4 text-center">
-            Height: {{ height }}
-        </div>
-        <div class="row pl-5 mt-4 text-center">
-            Date of Birth: {{ date_of_birth }}
+
+
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-7">
+                <div class="card p-3 py-4">
+                    <div class="text-center"> <img src="https://ubisoft-avatars.akamaized.net/20c7b18d-8d4a-4f24-ab6e-696fe5c618d0/default_256_256.png" width="100" class="rounded-circle"> </div>
+                    <div class="text-center mt-6"> 
+                        <h5 class="mt-2 mb-3">{{ first_name }}  {{ last_name }}</h5> 
+                        <div class="px-4 mt-3">
+                            <p class="fonts">            Height: {{ height }} inches
+                            </p>
+                            <p class="fonts">            Date of Birth: {{ date_of_birth }} 
+                            </p>
+                            <p class="fonts">            {{ email }} 
+                            </p>
+                        </div>
+
+                    </div>
+            </div>
         </div>
     </div>
 {% endblock %}

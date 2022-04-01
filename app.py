@@ -59,7 +59,7 @@ def profile():
     if user_id != -1:
         first_name, last_name, height, date_of_birth = db.get_user(user_id)
         return render_template("profile.html", first_name=first_name, last_name=last_name,
-                               height="height", date_of_birth=date_of_birth)
+                               height=height, date_of_birth=date_of_birth)
     else:
         return redirect(url_for('login'))
 
