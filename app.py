@@ -4,6 +4,7 @@ from db_secrets import secrets
 import db
 import hashlib
 import nutr_calc
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ user_id = -1 # -1 means no one is logged in
 @app.route("/", methods=["POST", "GET"])
 def login():
     global user_id
+
 
     if request.method == 'POST':
         email = request.form['email']
@@ -48,8 +50,25 @@ def sign_up():
 
 @app.route("/main")
 def main():
+    # N_DAYS_AGO = 1
+
+    # n_days_ago = today - timedelta(days= N_DAYS_AGO)
+    # print(n_days_ago.strftime('%Y-%m-%d'))
+
+    data =[] # cus date-data hahahahah 
+    today = datetime.now()    
+
+    for i in range(7):
+        delta = timedelta(days = i)
+        dtnew = today - delta
+        dtnew = dtnew.strftime('%Y-%m-%d')
+        data.append(str(dtnew))
+    print(data)
+
     if user_id != -1:
-        return render_template("main.html")
+        result = db.getEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
+
+        return render_template("main.html", result = result)
     else:
         return redirect(url_for('login'))
 
@@ -68,13 +87,13 @@ def profile():
 def entry():
     global user_id
 
+
     if user_id == -1:
         return redirect(url_for('login'))
     if request.method == "POST":
         # Example of retrieving data from form (need both for every entry)
         date = request.form['date']
         comment = request.form['comments']
-
         # emotion entry
         mood = request.form['mood']
         # sleep entry
@@ -106,7 +125,7 @@ def entry():
         # print(sleep)
     return render_template("entry.html")
   
-  
+
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
     if request.method == "GET":
@@ -154,13 +173,6 @@ def nutrition_info(food_id):
 
     return render_template("food_nutrition.html", food=food, nutrients=nutrients, daily_values=daily_values, ss=ss)
  
-
-@app.route("/current_week")
-def current_week():
-    if user_id != -1:
-        return "Weekly progress"
-    else:
-        return redirect(url_for('login'))
 
 
 # For debugging - just run file from terminal and any saved changes will be updated in browser

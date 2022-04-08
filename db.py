@@ -34,6 +34,7 @@ def get_food(id):
         query = "SELECT * FROM (BrandedFood NATURAL JOIN Food) WHERE fdc_id = %s;"
         cursor.execute(query, id)
         result = cursor.fetchall()
+
     return result[0]
 
 def get_nutrients(id):
@@ -94,6 +95,16 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
         
     connection.commit()
 
+def getFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM FoodEntry WHERE 1"
+        val =(user_id, date, comment, calories, fat, carbs, protein, weight)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+
+    connection.commit()
+    return result[0]
+
 
 def storeFoodEntryNutrition(calories, fat, carbs, protein):
     with connection.cursor() as cursor:
@@ -103,6 +114,17 @@ def storeFoodEntryNutrition(calories, fat, carbs, protein):
         # print("works")
         
     connection.commit()
+def getEntry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM EmotionEntry WHERE user_id = %s AND DATE(%s) >  (DATE(%s) - INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return  "You do not have an entry for today."
+        else: 
+            return result
+
 
 
 def add_user(first_name, last_name, height, date_of_birth, email, password):

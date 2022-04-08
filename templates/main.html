@@ -1,21 +1,33 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2 class="text-center mt-5"> Welcome to HoosHealth!</h2>
+<h3 class="text-center mt-5"> Entries </h3>
 
 
 
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
 
                 <div class="row mt-8 text-center">
                     <button type="button" class="btn btn-outline-info"a href="{{ url_for('profile') }}">Profile </a></button> <p></p>
-                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('current_week') }}">Current Week's progress </a></button><p></p>
                     <button type="button" class="btn btn-outline-info"a href="{{ url_for('entry') }}">Enter info about daily progress </a></button><p></p>
-                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('food_search') }}"> Food Search </a></button>
+                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('food_search') }}"> Food Search </a></button> -->
+                   
+                    {% for res in result %}
 
-                
-                </div></div></div></div>
+                    {{ res['entry_date'] }}
+
+                    {% endfor %}
+
+
+
+
+
+<!--                 
+                </div></div> -->
+            </div>
+            
+            </div>
 
 {% endblock %}
