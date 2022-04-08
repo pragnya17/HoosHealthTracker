@@ -114,9 +114,29 @@ def storeFoodEntryNutrition(calories, fat, carbs, protein):
         # print("works")
         
     connection.commit()
-def getEntry(user_id, entry_date):
+def getEmotionEntry(user_id, entry_date):
+    with connection.cursor() as cursor: #SELECT * FROM TABLE1 JOIN TABLE2 ON TABLE1.ID = TABLE2.ID
+        query = "SELECT * FROM EmotionEntry WHERE user_id = %s AND DATE(%s) > (DATE(%s) - INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return  "You do not have an entry for today."
+        else: 
+            return result
+def getExerciseEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "SELECT * FROM EmotionEntry WHERE user_id = %s AND DATE(%s) >  (DATE(%s) - INTERVAL 7 DAY);"
+        query = "SELECT * FROM ExerciseEntry WHERE user_id = %s AND DATE(%s) > (DATE(%s) - INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return  "You do not have an entry for today."
+        else: 
+            return result
+def getSleepEntry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM SleepEntry WHERE user_id = %s AND DATE(%s) > (DATE(%s) - INTERVAL 7 DAY);"
         val = (user_id, entry_date, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
@@ -125,7 +145,16 @@ def getEntry(user_id, entry_date):
         else: 
             return result
 
-
+def getNutrition(user_id, entry_date):
+   with connection.cursor() as cursor:
+        query = "SELECT * FROM FoodEntry WHERE user_id = %s AND DATE(%s) > (DATE(%s) - INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return  "You do not have an entry for today."
+        else: 
+            return result
 
 def add_user(first_name, last_name, height, date_of_birth, email, password):
     with connection.cursor() as cursor:

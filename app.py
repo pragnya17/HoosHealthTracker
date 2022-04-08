@@ -55,20 +55,22 @@ def main():
     # n_days_ago = today - timedelta(days= N_DAYS_AGO)
     # print(n_days_ago.strftime('%Y-%m-%d'))
 
-    data =[] # cus date-data hahahahah 
-    today = datetime.now()    
+    # data =[] # cus date-data hahahahah 
+    # today = datetime.now()    
 
-    for i in range(7):
-        delta = timedelta(days = i)
-        dtnew = today - delta
-        dtnew = dtnew.strftime('%Y-%m-%d')
-        data.append(str(dtnew))
-    print(data)
-
+    # for i in range(7):
+    #     delta = timedelta(days = i)
+    #     dtnew = today - delta
+    #     dtnew = dtnew.strftime('%Y-%m-%d')
+    #     data.append(str(dtnew))
     if user_id != -1:
-        result = db.getEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
+        emotionResult = db.getEmotionEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
+        exerciseResult = db.getExerciseEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
+        sleepResult = db.getSleepEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
+        foodResult = db.getNutrition(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
 
-        return render_template("main.html", result = result)
+        return render_template("main.html", emotionResult = emotionResult, exerciseResult = exerciseResult, sleepResult = sleepResult, foodResult = foodResult)
+    
     else:
         return redirect(url_for('login'))
 

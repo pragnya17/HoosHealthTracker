@@ -3,20 +3,19 @@
 {% block content %}
 <h3 class="text-center mt-5"> Entries </h3>
 
-
-
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
-        <!-- <div class="col-md-4">
 
-                <div class="row mt-8 text-center">
-                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('profile') }}">Profile </a></button> <p></p>
-                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('entry') }}">Enter info about daily progress </a></button><p></p>
-                    <button type="button" class="btn btn-outline-info"a href="{{ url_for('food_search') }}"> Food Search </a></button> -->
-                   
-                    {% for res in result %}
+                    {% for emotion in emotionResult %}
 
-                    {{ res['entry_date'] }}
+
+                    {{ emotion['entry_date'] }} :  {{ emotion['comments'] }} : {{ emotion['mood'] }} <br></br>
+
+                    {% endfor %}
+
+                    {% for exercise in exerciseResult %}
+
+                    {{ exercise['entry_date'] }} : {{ exercise['type'] }} <br></br>
 
                     {% endfor %}
 
@@ -24,8 +23,6 @@
 
 
 
-<!--                 
-                </div></div> -->
             </div>
             
             </div>
