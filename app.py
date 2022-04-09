@@ -68,7 +68,7 @@ def main():
         exerciseResult = db.getExerciseEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
         sleepResult = db.getSleepEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
         foodResult = db.getNutrition(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
-
+        
         return render_template("main.html", emotionResult = emotionResult, exerciseResult = exerciseResult, sleepResult = sleepResult, foodResult = foodResult)
     
     else:
