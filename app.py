@@ -1,3 +1,4 @@
+from re import X
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from db_secrets import secrets
@@ -68,7 +69,42 @@ def main():
         exerciseResult = db.getExerciseEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
         sleepResult = db.getSleepEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
         foodResult = db.getNutrition(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
+        
+        # for update/delete buttons on main.html
+        if request.method == "POST":
+            # get these from main.html ?
+            entry_date = 0 
+            comment = 0
 
+            mood = 0
+
+            intensity = 0
+            duration = 0
+            type = 0
+
+            sleep = 0
+
+            calories = 0
+            fat = 0
+            carbs = 0
+            protein = 0
+            weight = 0                
+            
+            # if updating an entry
+            if request.form["btnAction"] == "Update":
+                db.updateEmotionEntry(user_id, entry_date, comment, mood)
+                db.updateExerciseEntry(user_id, entry_date, comment, intensity, duration, type)
+                db.updateSleepEntry(user_id, entry_date, comment, sleep)
+                db.updateFoodEntry(user_id, entry_date, comment, calories, fat, carbs, protein, weight)
+            
+            # if deleting an entry
+            if request.form["btnAction"] == "Delete":
+                db.deleteEmotionEntry(user_id, entry_date)
+                db.deleteExerciseEntry(user_id, entry_date)
+                db.deleteSleepEntry(user_id, entry_date)
+                db.deleteFoodEntry(user_id, entry_date, calories, fat, carbs, protein)
+
+        
         return render_template("main.html", emotionResult = emotionResult, exerciseResult = exerciseResult, sleepResult = sleepResult, foodResult = foodResult)
     
     else:

@@ -156,6 +156,74 @@ def getNutrition(user_id, entry_date):
         else: 
             return result
 
+# updating form entries
+
+def updateEmotionEntry(user_id, date, comment, emotion):
+    with connection.cursor() as cursor:
+        query = "UPDATE EmotionEntry SET comments = %s, mood = %s WHERE user_id = %s AND entry_date = %s;"
+        val = (comment, emotion, user_id, date)
+        cursor.execute(query, val)
+
+def updateExerciseEntry(user_id, entry_date, comment, intensity, duration, type):
+    with connection.cursor() as cursor:
+        query = "UPDATE ExerciseEntry SET comments = %s, intensity = %s, duration = %s, type = %s WHERE user_id = %s AND entry_date = %s;"
+        val = (comment, intensity, duration, type, user_id, entry_date)
+        cursor.execute(query, val)
+
+def updateSleepEntry(user_id, entry_date, comment, sleep):
+    with connection.cursor() as cursor:
+        query = "UPDATE SleepEntry SET comments = %s, duration = %s WHERE user_id = %s AND entry_date = %s;"
+        val = (comment, sleep, user_id, entry_date)
+        cursor.execute(query, val)
+
+def updateFoodEntry(user_id, entry_date, comment, calories, fat, carbs, protein, weight):
+    with connection.cursor() as cursor:
+        updateFoodNutrition(calories, fat, carbs, protein)
+        query = "UPDATE FoodEntry SET comments = %s, total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s, weight = %s WHERE user_id = %s AND entry_date = %s;"
+        val = (comment, calories, fat, carbs, protein, weight, user_id, entry_date)
+        cursor.execute(query, val)
+
+###### do we want to update this? i guess we do, but how? what goes in "where" ?
+def updateFoodNutrition(calories, fat, carbs, protein):
+    with connection.cursor() as cursor:
+        query = "UPDATE FoodEntryNutrition SET total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s WHERE ;"
+        val = (calories, fat, carbs, protein)
+        cursor.execute(query, val)
+
+
+# deleting from db
+def deleteEmotionEntry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "DELETE FROM EmotionEntry WHERE user_id = %s, entry_date = %s;"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+
+def deleteExerciseEntry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "DELETE FROM ExerciseEntry WHERE user_id = %s, entry_date = %s;"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+
+def deleteSleepEntry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "DELETE FROM SleepEntry WHERE user_id = %s, entry_date = %s;"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+
+def deleteFoodEntry(user_id, entry_date, calories, fat, carbs, protein):
+    with connection.cursor() as cursor:
+        deleteFoodNutrition(calories, fat, carbs, protein)
+        query = "DELETE FROM FoodEntry WHERE user_id = %s, entry_date = %s;"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+
+def deleteFoodNutrition(calories, fat, carbs, protein):
+    with connection.cursor() as cursor:
+        query = "DELETE FROM FoodEntryNutrition WHERE total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s;"
+        val = (calories, fat, carbs, protein)
+        cursor.execute(query, val)
+
+
 def add_user(first_name, last_name, height, date_of_birth, email, password):
     with connection.cursor() as cursor:
         hashed_password = hashlib.sha256(bytes(password, 'utf-8')).hexdigest()
