@@ -19,31 +19,107 @@ table tr td {
 
     <div class="row d-flex justify-content-center text-center w-100">
         <div class="col">
-            <h4>Mood</h4>
+
+            <div class="card">
+                <h5 class="card-header">Mood</h5>
+                <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text">
+                    <ul>
+                        {% for entry in emotionResult %}
+                        {% if entry is string %}
+                        <li> No entry for today</li>
+                        {% else %}
+                        <li>{{ entry['entry_date']}}</li>
+                        {% endif %}
+            
+                        {% endfor %}
+                        </ul>
+                  </p>
+                  <a href="#" class="btn btn-primary">Update</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+
+                </div>
+              </div>           
+            
         </div>
 
         <div class="col">
-            <h4>Food</h4>
-            <ul>
-            {% for entry in foodResult %}
-            {% if entry is string %}
-            <li> No entry for today</li>
-            {% else %}
-            <li>{{ entry }}</li>
-            {% endif %}
 
-            {% endfor %}
-            </ul>
+            <div class="card">
+                <h5 class="card-header">Food</h5>
+                <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text">
+                    <ul>
+                        {% for entry in foodResult %}
+                        {% if entry is string %}
+                        <li> No entry for today</li>
+                        {% else %}
+                        <li>{{ entry['entry_date']}}</li>
+                        {% endif %}
+            
+                        {% endfor %}
+                        </ul>
+                  </p>
+                  <a href="#" class="btn btn-primary">Update</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+
+                </div>
+              </div>           
+            
+        </div>
+        <div class="col">
+
+            <div class="card">
+                <h5 class="card-header">Exercise</h5>
+                <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text">
+                    <ul>
+                        {% for entry in exerciseResult %}
+                        {% if entry is string %}
+                        <li> No entry for today</li>
+                        {% else %}
+                        <li>{{ entry['entry_date']}}</li>
+                        {% endif %}
+            
+                        {% endfor %}
+                        </ul>
+                  </p>
+                  <a href="#" class="btn btn-primary">Update</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+
+                </div>
+              </div>           
+            
         </div>
 
         <div class="col">
-            <h4>Exercise</h4>
-        </div>
 
-        <div class="col">
-            <h4>Sleep</h4>
-        </div>
+            <div class="card">
+                <h5 class="card-header">Sleep</h5>
+                <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text">
+                    <ul>
+                        {% for entry in sleepResult %}
+                        {% if entry is string %}
+                        <li> No entry </li>
+                        {% else %}
+                        <li>{{ entry['entry_date']}}</li>
+                        {% endif %}
+            
+                        {% endfor %}
+                        </ul>
+                  </p>
+                  <a href="#" class="btn btn-primary">Update</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
 
+                </div>
+              </div>           
+            
+        </div>
 
     </div>
 </div>

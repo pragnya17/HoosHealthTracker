@@ -112,7 +112,7 @@ def getEmotionEntry(user_id, entry_date):
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return {}
+            return 'string'
         else: 
             return result
 
@@ -123,7 +123,7 @@ def getExerciseEntry(user_id, entry_date):
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return {}
+            return 'string'
         else: 
             return result
 
@@ -134,7 +134,7 @@ def getSleepEntry(user_id, entry_date):
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return {}
+            return 'string'
         else: 
             return result
 
@@ -145,7 +145,7 @@ def getFoodEntry(user_id, entry_date):
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return {}
+            return 'string'
         else: 
             return result
 
