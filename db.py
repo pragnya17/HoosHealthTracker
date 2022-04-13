@@ -1,6 +1,7 @@
 import pymysql.cursors
 from db_secrets import secrets
 import hashlib
+import datetime as dt
 
 # Connect to the database
 connection = pymysql.connect(host= secrets['host'],
@@ -95,17 +96,6 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
         
     connection.commit()
 
-def getFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
-    with connection.cursor() as cursor:
-        query = "SELECT * FROM FoodEntry WHERE 1"
-        val =(user_id, date, comment, calories, fat, carbs, protein, weight)
-        cursor.execute(query, val)
-        result = cursor.fetchall()
-
-    connection.commit()
-    return result[0]
-
-
 def storeFoodEntryNutrition(calories, fat, carbs, protein):
     with connection.cursor() as cursor:
         query = "insert into FoodEntryNutrition (total_calories, total_fat, total_carbs, total_protein) VALUES(%s, %s, %s, %s)"
@@ -114,16 +104,18 @@ def storeFoodEntryNutrition(calories, fat, carbs, protein):
         # print("works")
         
     connection.commit()
+
 def getEmotionEntry(user_id, entry_date):
     with connection.cursor() as cursor:
         query = "SELECT * FROM EmotionEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
-        val = (user_id, entry_date, entry_date)
+        val = (user_id, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return  "You do not have an entry for today."
+            return {}
         else: 
             return result
+
 def getExerciseEntry(user_id, entry_date):
     with connection.cursor() as cursor:
         query = "SELECT * FROM ExerciseEntry WHERE user_id = %s AND entry_date > DATE(%s) - interval 7 day;"
@@ -131,28 +123,29 @@ def getExerciseEntry(user_id, entry_date):
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return  "You do not have an entry for today."
-        else: 
-            return result
-def getSleepEntry(user_id, entry_date):
-    with connection.cursor() as cursor:
-        query = "SELECT * FROM SleepEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
-        val = (user_id, entry_date, entry_date)
-        cursor.execute(query, val)
-        result = cursor.fetchall()
-        if len(result) == 0:
-            return  "You do not have an entry for today."
+            return {}
         else: 
             return result
 
-def getNutrition(user_id, entry_date):
-   with connection.cursor() as cursor:
-        query = "SELECT * FROM FoodEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
-        val = (user_id, entry_date, entry_date)
+def getSleepEntry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM SleepEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
+        val = (user_id, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
-            return  "You do not have an entry for today."
+            return {}
+        else: 
+            return result
+
+def getFoodEntry(user_id, entry_date):
+   with connection.cursor() as cursor:
+        query = "SELECT * FROM FoodEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return {}
         else: 
             return result
 
@@ -171,7 +164,6 @@ def add_user(first_name, last_name, height, date_of_birth, email, password):
 
     connection.commit()
     return True
-
 
 def get_user(user_id):
     with connection.cursor() as cursor:

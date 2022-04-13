@@ -64,12 +64,12 @@ def main():
     #     dtnew = dtnew.strftime('%Y-%m-%d')
     #     data.append(str(dtnew))
     if user_id != -1:
-        emotionResult = db.getEmotionEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
-        exerciseResult = db.getExerciseEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
-        sleepResult = db.getSleepEntry(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
-        foodResult = db.getNutrition(user_id, entry_date = datetime.now().strftime('%Y-%m-%d'))
-        
-        return render_template("main.html", emotionResult = emotionResult, exerciseResult = exerciseResult, sleepResult = sleepResult, foodResult = foodResult)
+        emotionResult = db.getEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+        exerciseResult = db.getExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+        sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+        foodResult = db.getFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+
+        return render_template("main.html", emotionResult=emotionResult, exerciseResult=exerciseResult, sleepResult=sleepResult, foodResult=foodResult)
     
     else:
         return redirect(url_for('login'))

@@ -1,26 +1,50 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h3 class="text-center mt-5"> Entries </h3>
-
-<div class="container mt-5">
-    <div class="row d-flex justify-content-center">
-
-                    {% for res in exerciseResult %}
-
-
-                    {{ res }} <br></br>
-
-                    {% endfor %}
-
-
+<style>
+table {
+	display: table;
+}
+table tr {
+	display: table-cell;
+}
+table tr td {
+	display: block;
+}
+</style>
 
 
+<div class="container-lg">
+    <h3 class="text-center m-3"> Here's a summary of your entries from the past 7 days: </h3>
+
+    <div class="row d-flex justify-content-center text-center w-100">
+        <div class="col">
+            <h4>Mood</h4>
+        </div>
+
+        <div class="col">
+            <h4>Food</h4>
+            <ul>
+            {% for entry in foodResult %}
+            {% if entry is string %}
+            <li> No entry for today</li>
+            {% else %}
+            <li>{{ entry }}</li>
+            {% endif %}
+
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col">
+            <h4>Exercise</h4>
+        </div>
+
+        <div class="col">
+            <h4>Sleep</h4>
+        </div>
 
 
-
-            </div>
-            
-            </div>
-
+    </div>
+</div>
 {% endblock %}
