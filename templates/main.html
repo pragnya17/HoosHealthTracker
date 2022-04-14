@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 
+
 {% block content %}
 <style>
 table {
@@ -11,6 +12,14 @@ table tr {
 table tr td {
 	display: block;
 }
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 </style>
 
 
@@ -26,18 +35,25 @@ table tr td {
                   <h5 class="card-title"></h5>
                   <p class="card-text">
                     <ul>
+
                         {% for entry in emotionResult %}
-                        {% if entry is string %}
-                        <li> No entry for today</li>
-                        {% else %}
-                        <li>{{ entry['entry_date']}}</li>
+                        <p class="bg-light">{{entry['entry_date']}}</p>
+
+                        {% if entry['mood'] == 0 %}
+                         <b>Feeling: </b>   &#128577; 
                         {% endif %}
-            
+                        {% if entry['mood'] == 1  %}
+                        <b>Feeling: </b>     &#128528;
+                        {% endif %}
+                        {% if entry['mood'] ==  2 %}
+                        <b>Feeling: </b>    &#128526;
+                        {% endif %}
+                        <hr/>
+
                         {% endfor %}
+                        
                         </ul>
                   </p>
-                  <a href="#" class="btn btn-primary">Update</a>
-                  <a href="#" class="btn btn-primary">Delete</a>
 
                 </div>
               </div>           
@@ -51,19 +67,23 @@ table tr td {
                 <div class="card-body">
                   <h5 class="card-title"></h5>
                   <p class="card-text">
-                    <ul>
-                        {% for entry in foodResult %}
-                        {% if entry is string %}
-                        <li> No entry for today</li>
-                        {% else %}
-                        <li>{{ entry['entry_date']}}</li>
-                        {% endif %}
-            
-                        {% endfor %}
-                        </ul>
-                  </p>
-                  <a href="#" class="btn btn-primary">Update</a>
-                  <a href="#" class="btn btn-primary">Delete</a>
+                    {% for entry in foodResult %}
+                    <dl class="row">
+
+                    <p class="bg-light">{{entry['entry_date']}}</p>
+                    <dt class="col-sm-6">Calories: </dt>  
+                    <dd class="col-sm-4">{{entry['total_calories']}} cal</dd>
+                    <dt class="col-sm-6">Fat: </dt>  
+                    <dd class="col-sm-4">{{entry['total_fat']}} g</dd>
+                    <dt class="col-sm-6">Carbs: </dt>  
+                    <dd class="col-sm-4"> {{entry['total_carbs']}} g</dd>
+                    <dt class="col-sm-6">Protein: </dt>  
+                    <dd class="col-sm-4"> {{entry['total_protein']}} g</dd>
+                    <hr/>
+                    </dl>
+                    {% endfor %}
+                    </ul>
+              </p>
 
                 </div>
               </div>           
@@ -76,20 +96,21 @@ table tr td {
                 <div class="card-body">
                   <h5 class="card-title"></h5>
                   <p class="card-text">
-                    <ul>
-                        {% for entry in exerciseResult %}
-                        {% if entry is string %}
-                        <li> No entry for today</li>
-                        {% else %}
-                        <li>{{ entry['entry_date']}}</li>
-                        {% endif %}
-            
-                        {% endfor %}
-                        </ul>
-                  </p>
-                  <a href="#" class="btn btn-primary">Update</a>
-                  <a href="#" class="btn btn-primary">Delete</a>
+                    {% for entry in exerciseResult %}
+                    <dl class="row">
 
+                    <p class="bg-light">{{entry['entry_date']}}</p>
+                    <dt class="col-sm-6">Duration: </dt>  
+                    <dd class="col-sm-6">{{entry['duration']}} minutes</dd>
+                    <dt class="col-sm-6">Intensity: </dt>  
+                    <dd class="col-sm-4">{{entry['intensity']}}</dd>
+                    <dt class="col-sm-6">Type: </dt>  
+                    <dd class="col-sm-4"> {{entry['type']}}</dd>
+                    <hr/>
+                    </dl>
+                    {% endfor %}
+                    </ul>
+              </p>
                 </div>
               </div>           
             
@@ -102,19 +123,20 @@ table tr td {
                 <div class="card-body">
                   <h5 class="card-title"></h5>
                   <p class="card-text">
-                    <ul>
-                        {% for entry in sleepResult %}
-                        {% if entry is string %}
-                        <li> No entry </li>
-                        {% else %}
-                        <li>{{ entry['entry_date']}}</li>
-                        {% endif %}
-            
-                        {% endfor %}
-                        </ul>
-                  </p>
-                  <a href="#" class="btn btn-primary">Update</a>
-                  <a href="#" class="btn btn-primary">Delete</a>
+                    {% for entry in sleepResult %}
+                     
+                    <p class="bg-light">{{entry['entry_date']}}</p>
+
+
+                    <dl class="row">
+
+                    <dt class="col-sm-6">Sleep Duration: </dt>  
+                    <dd class="col-sm-4">{{entry['duration']}} hours</dd>
+                    </dl>
+                    <hr/>
+
+                    {% endfor %}
+              </p>
 
                 </div>
               </div>           

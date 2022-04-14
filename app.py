@@ -50,39 +50,21 @@ def sign_up():
 
 @app.route("/main")
 def main():
-    # N_DAYS_AGO = 1
-
-    # n_days_ago = today - timedelta(days= N_DAYS_AGO)
-    # print(n_days_ago.strftime('%Y-%m-%d'))
-
-    # data =[] # cus date-data hahahahah 
-    # today = datetime.now()    
-
-    # for i in range(7):
-    #     delta = timedelta(days = i)
-    #     dtnew = today - delta
-    #     dtnew = dtnew.strftime('%Y-%m-%d')
-    #     data.append(str(dtnew))
     if user_id != -1:
         emotionResult = db.getEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         exerciseResult = db.getExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         foodResult = db.getFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
 
-
+        print(list(emotionResult[1].values())[2])
         # get these from main.html? for update/delete
-        entry_date = 0
         comment = 0
- 
         mood = 0
-        print(mood)
- 
+        # print(mood)
         intensity = 0
         duration = 0
         type = 0
- 
         sleep = 0
- 
         calories = 0
         fat = 0
         carbs = 0
@@ -93,17 +75,17 @@ def main():
         if request.method == "POST":              
             # if updating an entry
             if request.form["btnAction"] == "Update":
-                db.updateEmotionEntry(user_id, entry_date, comment, mood)
-                db.updateExerciseEntry(user_id, entry_date, comment, intensity, duration, type)
-                db.updateSleepEntry(user_id, entry_date, comment, sleep)
-                db.updateFoodEntry(user_id, entry_date, comment, calories, fat, carbs, protein, weight)
+                db.updateEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, mood)
+                db.updateExerciseEntry(user_id,  datetime.now().strftime('%Y-%m-%d'), comment, intensity, duration, type)
+                db.updateSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, sleep)
+                db.updateFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, calories, fat, carbs, protein, weight)
            
             # if deleting an entry
             if request.form["btnAction"] == "Delete":
-                db.deleteEmotionEntry(user_id, entry_date)
-                db.deleteExerciseEntry(user_id, entry_date)
-                db.deleteSleepEntry(user_id, entry_date)
-                db.deleteFoodEntry(user_id, entry_date, calories, fat, carbs, protein)
+                db.deleteEmotionEntry(user_id,   datetime.now().strftime('%Y-%m-%d'))
+                db.deleteExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+                db.deleteSleepEntry(user_id,  datetime.now().strftime('%Y-%m-%d'))
+                db.deleteFoodEntry(user_id,  datetime.now().strftime('%Y-%m-%d'), calories, fat, carbs, protein)
 
         return render_template("main.html", emotionResult=emotionResult, exerciseResult=exerciseResult, sleepResult=sleepResult, foodResult=foodResult)
     
