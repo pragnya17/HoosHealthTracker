@@ -203,32 +203,32 @@ def updateFoodNutrition(calories, fat, carbs, protein):
 # deleting from db
 def deleteEmotionEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "DELETE FROM EmotionEntry WHERE user_id = %s, entry_date = %s;"
+        query = "DELETE FROM EmotionEntry WHERE user_id = %s AND entry_date = %s;"
         val = (user_id, entry_date)
         cursor.execute(query, val)
  
 def deleteExerciseEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "DELETE FROM ExerciseEntry WHERE user_id = %s, entry_date = %s;"
+        query = "DELETE FROM ExerciseEntry WHERE user_id = %s AND entry_date = %s;"
         val = (user_id, entry_date)
         cursor.execute(query, val)
  
 def deleteSleepEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "DELETE FROM SleepEntry WHERE user_id = %s, entry_date = %s;"
+        query = "DELETE FROM SleepEntry WHERE user_id = %s AND entry_date = %s;"
         val = (user_id, entry_date)
         cursor.execute(query, val)
  
 def deleteFoodEntry(user_id, entry_date, calories, fat, carbs, protein):
     with connection.cursor() as cursor:
         deleteFoodNutrition(calories, fat, carbs, protein)
-        query = "DELETE FROM FoodEntry WHERE user_id = %s, entry_date = %s;"
+        query = "DELETE FROM FoodEntry WHERE user_id = %s AND entry_date = %s;"
         val = (user_id, entry_date)
         cursor.execute(query, val)
  
 def deleteFoodNutrition(calories, fat, carbs, protein):
     with connection.cursor() as cursor:
-        query = "DELETE FROM FoodEntryNutrition WHERE total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s;"
+        query = "DELETE FROM FoodEntryNutrition WHERE total_calories = %s AND total_fat = %s AND total_carbs = %s AND total_protein = %s;"
         val = (calories, fat, carbs, protein)
         cursor.execute(query, val)
         
