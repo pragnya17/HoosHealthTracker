@@ -170,12 +170,16 @@ def nutrition_info(food_id):
     food = db.get_food(food_id)
     nutrients = db.get_nutrients(food_id)
 
+
     # The data has some repetitiveness in how it displays serving size in
     # the household_serving_fulltext and serving_size columns, so here we eliminate that
-    if str(int(food['serving_size'])) in food['household_serving_fulltext'] or str(food['serving_size']) in food['household_serving_fulltext']:
-        ss = food['household_serving_fulltext']
+    if food['household_serving_fulltext'] is not None:
+        if str(int(food['serving_size'])) in food['household_serving_fulltext'] or str(food['serving_size']) in food['household_serving_fulltext']:
+            ss = food['household_serving_fulltext']
+        else:
+            ss = food['household_serving_fulltext'] + " (" + str(food['serving_size']) + "g)"
     else:
-        ss = food['household_serving_fulltext'] + " (" + str(food['serving_size']) + "g)"
+        ss = " (" + str(food['serving_size']) + "g)"
 
     # Our food info gives a "household" serving size, but our nutrient info is per 100g
     # So here we update the nutrients to reflect the household serving size
