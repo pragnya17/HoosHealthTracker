@@ -4,6 +4,7 @@ from db_secrets import secrets
 import db
 import hashlib
 import nutr_calc
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ user_id = -1 # -1 means no one is logged in
 @app.route("/", methods=["POST", "GET"])
 def login():
     global user_id
+
 
     if request.method == 'POST':
         email = request.form['email']
@@ -49,7 +51,44 @@ def sign_up():
 @app.route("/main")
 def main():
     if user_id != -1:
-        return render_template("main.html")
+        emotionResult = db.getEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+        exerciseResult = db.getExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+        sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+        foodResult = db.getFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+
+        print(list(emotionResult[1].values())[2])
+        # get these from main.html? for update/delete
+        comment = 0
+        mood = 0
+        # print(mood)
+        intensity = 0
+        duration = 0
+        type = 0
+        sleep = 0
+        calories = 0
+        fat = 0
+        carbs = 0
+        protein = 0
+        weight = 0
+ 
+        # for update/delete buttons on main.html
+        if request.method == "POST":              
+            # if updating an entry
+            if request.form["btnAction"] == "Update":
+                db.updateEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, mood)
+                db.updateExerciseEntry(user_id,  datetime.now().strftime('%Y-%m-%d'), comment, intensity, duration, type)
+                db.updateSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, sleep)
+                db.updateFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, calories, fat, carbs, protein, weight)
+           
+            # if deleting an entry
+            if request.form["btnAction"] == "Delete":
+                db.deleteEmotionEntry(user_id,   datetime.now().strftime('%Y-%m-%d'))
+                db.deleteExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
+                db.deleteSleepEntry(user_id,  datetime.now().strftime('%Y-%m-%d'))
+                db.deleteFoodEntry(user_id,  datetime.now().strftime('%Y-%m-%d'), calories, fat, carbs, protein)
+
+        return render_template("main.html", emotionResult=emotionResult, exerciseResult=exerciseResult, sleepResult=sleepResult, foodResult=foodResult)
+    
     else:
         return redirect(url_for('login'))
 
@@ -68,13 +107,13 @@ def profile():
 def entry():
     global user_id
 
+
     if user_id == -1:
         return redirect(url_for('login'))
     if request.method == "POST":
         # Example of retrieving data from form (need both for every entry)
         date = request.form['date']
         comment = request.form['comments']
-
         # emotion entry
         mood = request.form['mood']
         # sleep entry
@@ -106,7 +145,7 @@ def entry():
         # print(sleep)
     return render_template("entry.html")
   
-  
+
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
     if request.method == "GET":
@@ -154,13 +193,6 @@ def nutrition_info(food_id):
 
     return render_template("food_nutrition.html", food=food, nutrients=nutrients, daily_values=daily_values, ss=ss)
  
-
-@app.route("/current_week")
-def current_week():
-    if user_id != -1:
-        return "Weekly progress"
-    else:
-        return redirect(url_for('login'))
 
 
 # For debugging - just run file from terminal and any saved changes will be updated in browser
