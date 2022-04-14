@@ -1,7 +1,10 @@
 {% extends "index.html" %}
 
 {% block content %}
-<div class="container-lg">
+<div class="container-lg" style="height: 70vh;">
+    <div class="d-flex flex-column justify-content-center align-items-center text-center h-100">
     <h2>Sorry, information for that food is no longer available</h2>
+    <p>Return to the <a href="{{ url_for('food_search') }}">search page</a>.</p>
+    </div>
 </div>
-
+{% endblock %}

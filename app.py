@@ -170,6 +170,9 @@ def nutrition_info(food_id):
     food = db.get_food(food_id)
     nutrients = db.get_nutrients(food_id)
 
+    if len(food) == 0 or len(nutrients) == 0:
+        return render_template("food_nutrition_error.html")
+
 
     # The data has some repetitiveness in how it displays serving size in
     # the household_serving_fulltext and serving_size columns, so here we eliminate that

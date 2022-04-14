@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2 class="text-center p-2">
+<h2 class="text-center mt-2 p-1">
     Showing results for: {{ food_to_search }}
     <small class="text-muted">
         ({{ food_results|length }} foods found)
@@ -9,7 +9,8 @@
 </h2> 
 
 <div class="container-lg">
-    <p></p> 
+    <p class="text-center">Not what you're looking for? Return to the <a href="{{ url_for('food_search') }}">search page</a>.</p> 
+    
     <ul class="list-group">
     {% for food in food_results %}
 
@@ -18,10 +19,11 @@
     {% endfor %}
     </ul>
 
-    <div class="mt-2">
+    <div class="mt-2 text-center">
         <small class="text-muted">
             Note: All information in our nutritional library comes from the <a target="_new" href="https://fdc.nal.usda.gov/download-datasets.html"> USDA FoodDataCentral</a> Branded Foods dataset (October 2020).
         </small>
     </div>
+
 </div>
 {% endblock %}
