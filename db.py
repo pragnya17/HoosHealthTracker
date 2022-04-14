@@ -187,17 +187,17 @@ def updateSleepEntry(user_id, entry_date, comment, sleep):
  
 def updateFoodEntry(user_id, entry_date, comment, calories, fat, carbs, protein, weight):
     with connection.cursor() as cursor:
-        updateFoodNutrition(calories, fat, carbs, protein)
+        storeFoodEntryNutrition(calories, fat, carbs, protein) # just add the entry to foodentrynutrition
         query = "UPDATE FoodEntry SET comments = %s, total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s, weight = %s WHERE user_id = %s AND entry_date = %s;"
         val = (comment, calories, fat, carbs, protein, weight, user_id, entry_date)
         cursor.execute(query, val)
  
 ###### do we want to update this? i guess we do, but how? what goes in "where" ?
-def updateFoodNutrition(calories, fat, carbs, protein):
-    with connection.cursor() as cursor:
-        query = "UPDATE FoodEntryNutrition SET total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s WHERE ;"
-        val = (calories, fat, carbs, protein)
-        cursor.execute(query, val)
+#def updateFoodNutrition(calories, fat, carbs, protein):
+#    with connection.cursor() as cursor:
+#        query = "UPDATE FoodEntryNutrition SET total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s WHERE ;"
+#        val = (calories, fat, carbs, protein)
+#        cursor.execute(query, val)
  
  
 # deleting from db
