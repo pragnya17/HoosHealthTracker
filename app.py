@@ -14,7 +14,6 @@ user_id = -1 # -1 means no one is logged in
 def login():
     global user_id
 
-
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -41,10 +40,6 @@ def sign_up():
 
         success = db.add_user(first_name, last_name, height, date_of_birth, email, password)
 
-        # if success:
-        #     flash(request, "You are now signed up! Please log in to your new account below.")
-        #     return redirect(url_for('sign_up'))
-
     return render_template("sign_up.html")
 
 
@@ -56,7 +51,6 @@ def main():
         sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         foodResult = db.getFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
 
-        print(list(emotionResult[1].values())[2])
         # get these from main.html? for update/delete
         comment = 0
         mood = 0
@@ -107,7 +101,6 @@ def profile():
 def entry():
     global user_id
 
-
     if user_id == -1:
         return redirect(url_for('login'))
     if request.method == "POST":
@@ -122,29 +115,39 @@ def entry():
         intensity = request.form['exercise_intensity']
         duration = request.form['exercise_duration']
         type = request.form['exercise_type']
-        # type = request.form['exercise_type'] # not working
-        # food entry/food entry nutritions
+        # food entry
         calories = request.form['calories']
         fat = request.form['fat']
         carbs = request.form['carbs']
         protein = request.form['protein']
         weight = request.form['weight']
 
-        # try:
         db.storeEmotionEntry(user_id, date, comment, mood)
         db.storeSleepEntry(user_id, date, comment, sleep)
         db.storeExerciseEntry(user_id, date, comment, intensity, duration, type)
         db.storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight)
-        # except:
-        #     return render_template("An exception occurred, try again")
-
-        # print(get_users())
-        # print(date)
-        # print(comment)
-        # print(mood)
-        # print(sleep)
+        
     return render_template("entry.html")
   
+@app.route("/food_update/<date>", methods=["POST", "GET"])
+def food_entry_update(date):
+    if request.method == "GET":
+        foodResult = db.get_single_food_entry(user_id, date)    
+        return render_template("food_update.html", date=date, foodResult=foodResult)
+
+    if request.method == "POST":
+        if request.form["btnAction"] == "UPDATE":
+            calories = request.form['calories']
+            carbs = request.form['carbs']
+            protein = request.form['protein']
+            fat = request.form['fat']
+            db.updateFoodEntry(user_id, date, "dummy_str", calories, fat, carbs, protein, 10)
+
+            return redirect(url_for('main'))
+
+
+    
+
 
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
@@ -193,7 +196,6 @@ def nutrition_info(food_id):
 
     return render_template("food_nutrition.html", food=food, nutrients=nutrients, daily_values=daily_values, ss=ss)
  
-
 
 # For debugging - just run file from terminal and any saved changes will be updated in browser
 # without having to restart the program.

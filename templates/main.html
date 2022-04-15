@@ -37,7 +37,8 @@ hr {
                     <ul>
 
                         {% for entry in emotionResult %}
-                        <p class="bg-light">{{entry['entry_date']}}</p>
+
+                        <p><a href="#" class="bg-light">{{entry['entry_date']}}</a></p>
 
                         {% if entry['mood'] == 0 %}
                          <b>Feeling: </b>   &#128577; 
@@ -70,7 +71,7 @@ hr {
                     {% for entry in foodResult %}
                     <dl class="row">
 
-                    <p class="bg-light">{{entry['entry_date']}}</p>
+                    <p class="bg-light"><a href="/food_update/{{entry['entry_date']}}">{{entry['entry_date']}}</a></p>
                     <dt class="col-sm-6">Calories: </dt>  
                     <dd class="col-sm-4">{{entry['total_calories']}} cal</dd>
                     <dt class="col-sm-6">Fat: </dt>  

@@ -86,7 +86,7 @@ def storeExerciseEntry(user_id, date, comment, intensity, duration, type):
 def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight):
 
     with connection.cursor() as cursor:
-        storeFoodEntryNutrition(calories, fat, carbs, protein)
+        #storeFoodEntryNutrition(calories, fat, carbs, protein)
         
         query = "insert into FoodEntry (user_id, entry_date, comments, total_calories, total_fat, total_carbs, total_protein, weight) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
         val = (user_id, date, comment, calories, fat, carbs, protein, weight)
@@ -96,6 +96,7 @@ def storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight
         
     connection.commit()
 
+# Delete this eventually
 def storeFoodEntryNutrition(calories, fat, carbs, protein):
     with connection.cursor() as cursor:
         query = "insert into FoodEntryNutrition (total_calories, total_fat, total_carbs, total_protein) VALUES(%s, %s, %s, %s)"
@@ -137,6 +138,17 @@ def getSleepEntry(user_id, entry_date):
             return 'string'
         else: 
             return result
+
+def get_single_food_entry(user_id, entry_date):
+   with connection.cursor() as cursor:
+        query = "SELECT * FROM FoodEntry WHERE user_id = %s AND entry_date = %s;"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return 'string'
+        else: 
+            return result[0]  
 
 def getFoodEntry(user_id, entry_date):
    with connection.cursor() as cursor:
@@ -187,10 +199,12 @@ def updateSleepEntry(user_id, entry_date, comment, sleep):
  
 def updateFoodEntry(user_id, entry_date, comment, calories, fat, carbs, protein, weight):
     with connection.cursor() as cursor:
-        storeFoodEntryNutrition(calories, fat, carbs, protein) # just add the entry to foodentrynutrition
+        #storeFoodEntryNutrition(calories, fat, carbs, protein) # just add the entry to foodentrynutrition
         query = "UPDATE FoodEntry SET comments = %s, total_calories = %s, total_fat = %s, total_carbs = %s, total_protein = %s, weight = %s WHERE user_id = %s AND entry_date = %s;"
         val = (comment, calories, fat, carbs, protein, weight, user_id, entry_date)
         cursor.execute(query, val)
+    
+    connection.commit()
  
 ###### do we want to update this? i guess we do, but how? what goes in "where" ?
 #def updateFoodNutrition(calories, fat, carbs, protein):
