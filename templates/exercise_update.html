@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h3 class="text-center mt-3">Food Entry from {{ date }}</h3>
+<div class="container-lg mx-auto d-flex col justify-content-center mt-3 mb-3">
+    <form method="post">
+        <div class="row mt-3">
+            <div class="form-group col">
+                <label for="exercise">Minutes of Exercise</label>
+                <input class="form-control" type="number" name="exercise_duration" id="exercise" min="0" value="{{ exerciseResult['duration'] }}">
+            </div>
+            <div class="form-group col">
+                <label for="intensity">Exercise Intensity</label>
+                <select class="form-select" name="exercise_intensity" id="intensity">
+                    <option value="1">Low</option>
+                    <option value="2">Moderate</option>
+                    <option value="3">Vigorous</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="exercise_type">Type of Exercise</label>
+                <input class="form-control" type="text" name="exercise_type" id="exercise_type" value="{{ exerciseResult['type'] }}">
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col text-center">
+                <input type="submit" value="UPDATE" name="btnAction" class="btn btn-primary">
+            </div>
+            <div class="form-group col text-center">
+                <input type="submit" value="DELETE" name="btnAction" class="btn btn-danger">
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
