@@ -14,7 +14,6 @@ user_id = -1 # -1 means no one is logged in
 def login():
     global user_id
 
-
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -56,7 +55,6 @@ def main():
         sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         foodResult = db.getFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
 
-        print(list(emotionResult[1].values())[2])
         # get these from main.html? for update/delete
         comment = 0
         mood = 0
