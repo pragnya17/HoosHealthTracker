@@ -100,7 +100,7 @@ hr {
                     {% for entry in exerciseResult %}
                     <dl class="row">
 
-                    <p class="bg-light">{{entry['entry_date']}}</p>
+                    <p class="bg-light"><a href="/exercise_update/{{entry['entry_date']}}">{{entry['entry_date']}}</a></p>
                     <dt class="col-sm-6">Duration: </dt>  
                     <dd class="col-sm-6">{{entry['duration']}} minutes</dd>
                     <dt class="col-sm-6">Intensity: </dt>  

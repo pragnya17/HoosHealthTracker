@@ -161,6 +161,17 @@ def get_single_emotion_entry(user_id, entry_date):
         else: 
             return result[0]  
 
+def get_single_exercise_entry(user_id, entry_date):
+    with connection.cursor() as cursor:
+        query = "SELECT * FROM ExerciseEntry WHERE user_id = %s AND entry_date = %s;"
+        val = (user_id, entry_date)
+        cursor.execute(query, val)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return 'string'
+        else: 
+            return result[0]  
+
 def getFoodEntry(user_id, entry_date):
    with connection.cursor() as cursor:
         query = "SELECT * FROM FoodEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"

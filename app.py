@@ -165,6 +165,24 @@ def mood_entry_update(date):
 
         return redirect(url_for('main'))
 
+@app.route("/exercise_update/<date>", methods=["POST", "GET"])
+def exercise_entry_update(date):
+    if request.method == "GET":
+        exerciseResult = db.get_single_exercise_entry(user_id, date)    
+        return render_template("exercise_update.html", date=date, exerciseResult=exerciseResult)
+    
+    if request.method == "POST":
+        if request.form["btnAction"] == "UPDATE":
+            intensity = request.form['exercise_intensity']
+            duration = request.form['exercise_duration']
+            type = request.form['exercise_type']
+            db.updateExerciseEntry(user_id, date, "dummy_str", intensity, duration, type)
+
+        if request.form["btnAction"] == "DELETE":
+            db.deleteExerciseEntry(user_id, date)
+
+        return redirect(url_for('main'))
+
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
     if request.method == "GET":
