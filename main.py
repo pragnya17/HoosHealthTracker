@@ -206,5 +206,5 @@ def nutrition_info(food_id):
 # without having to restart the program.
 if __name__ == '__main__':
     import os  
-    # port = int(os.environ.get('PORT', 500)) 
+    port = int(os.environ.get('PORT', 500)) 
     app.run(debug=True)
