@@ -143,7 +143,10 @@ def food_entry_update(date):
             fat = request.form['fat']
             db.updateFoodEntry(user_id, date, "dummy_str", calories, fat, carbs, protein, 10)
 
-            return redirect(url_for('main'))
+        if request.form["btnAction"] == "DELETE":
+            db.deleteFoodEntry(user_id, date)
+
+        return redirect(url_for('main'))
 
 
     

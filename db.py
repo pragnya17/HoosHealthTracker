@@ -238,9 +238,9 @@ def deleteSleepEntry(user_id, entry_date):
         cursor.execute(query, val)
     connection.commit()
  
-def deleteFoodEntry(user_id, entry_date, calories, fat, carbs, protein):
+def deleteFoodEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        deleteFoodNutrition(calories, fat, carbs, protein)
+        #deleteFoodNutrition(calories, fat, carbs, protein)
         query = "DELETE FROM FoodEntry WHERE user_id = %s AND entry_date = %s;"
         val = (user_id, entry_date)
         cursor.execute(query, val)
