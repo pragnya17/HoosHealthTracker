@@ -205,4 +205,6 @@ def nutrition_info(food_id):
 # For debugging - just run file from terminal and any saved changes will be updated in browser
 # without having to restart the program.
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os  
+    port = int(os.environ.get('PORT', 500)) 
+    app.run(debug=True, port = port)
