@@ -148,9 +148,22 @@ def food_entry_update(date):
 
         return redirect(url_for('main'))
 
-
+@app.route("/mood_update/<date>", methods=["POST", "GET"])
+def mood_entry_update(date):
+    if request.method == "GET":
+        moodResult = db.get_single_emotion_entry(user_id, date)    
+        return render_template("mood_update.html", date=date, moodResult=moodResult)
     
+    if request.method == "POST":
+        if request.form["btnAction"] == "UPDATE":
+            mood = request.form['mood']
+            comments = request.form['comments']
+            db.updateEmotionEntry(user_id, date, comments, mood)
 
+        if request.form["btnAction"] == "DELETE":
+            db.deleteEmotionEntry(user_id, date)
+
+        return redirect(url_for('main'))
 
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():

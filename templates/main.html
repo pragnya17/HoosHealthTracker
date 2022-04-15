@@ -38,7 +38,7 @@ hr {
 
                         {% for entry in emotionResult %}
 
-                        <p><a href="#" class="bg-light">{{entry['entry_date']}}</a></p>
+                        <p><a href="/mood_update/{{ entry['entry_date'] }}" class="bg-light">{{entry['entry_date']}}</a></p>
 
                         {% if entry['mood'] == 0 %}
                          <b>Feeling: </b>   &#128577; 
