@@ -183,6 +183,23 @@ def exercise_entry_update(date):
 
         return redirect(url_for('main'))
 
+@app.route("/sleep_update/<date>", methods=["POST", "GET"])
+def sleep_entry_update(date):
+    if request.method == "GET":
+        sleepResult = db.get_single_sleep_entry(user_id, date)
+        return render_template("sleep_update.html", date=date, sleepResult=sleepResult)
+    
+    if request.method == "POST":
+        if request.form["btnAction"] == "UPDATE":
+            duration = request.form['sleep']
+            db.updateSleepEntry(user_id, date, "dummy_str", duration)
+
+        if request.form["btnAction"] == "DELETE":
+            db.deleteSleepEntry(user_id, date)
+        
+        return redirect(url_for('main'))
+
+
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
     if request.method == "GET":

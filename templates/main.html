@@ -126,7 +126,7 @@ hr {
                   <p class="card-text">
                     {% for entry in sleepResult %}
                      
-                    <p class="bg-light">{{entry['entry_date']}}</p>
+                    <p class="bg-light"><a href="/sleep_update/{{ entry['entry_date'] }}">{{entry['entry_date']}}</a></p>
 
 
                     <dl class="row">
