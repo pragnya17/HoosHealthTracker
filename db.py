@@ -115,8 +115,8 @@ def storeFoodEntryNutrition(calories, fat, carbs, protein):
 
 def getEmotionEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "SELECT * FROM EmotionEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
-        val = (user_id, entry_date)
+        query = "SELECT * FROM EmotionEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY) AND entry_date < (DATE(%s) + INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
@@ -126,8 +126,8 @@ def getEmotionEntry(user_id, entry_date):
 
 def getExerciseEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "SELECT * FROM ExerciseEntry WHERE user_id = %s AND entry_date > DATE(%s) - interval 7 day;"
-        val = (user_id,entry_date)
+        query = "SELECT * FROM ExerciseEntry WHERE user_id = %s AND entry_date > DATE(%s) - interval 7 day AND entry_date < (DATE(%s) + INTERVAL 7 DAY);"
+        val = (user_id,entry_date, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
@@ -137,8 +137,8 @@ def getExerciseEntry(user_id, entry_date):
 
 def getSleepEntry(user_id, entry_date):
     with connection.cursor() as cursor:
-        query = "SELECT * FROM SleepEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
-        val = (user_id, entry_date)
+        query = "SELECT * FROM SleepEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY) AND entry_date < (DATE(%s) + INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:
@@ -193,8 +193,8 @@ def get_single_sleep_entry(user_id, entry_date):
 
 def getFoodEntry(user_id, entry_date):
    with connection.cursor() as cursor:
-        query = "SELECT * FROM FoodEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY);"
-        val = (user_id, entry_date)
+        query = "SELECT * FROM FoodEntry WHERE user_id = %s AND entry_date > (DATE(%s) - INTERVAL 7 DAY) AND entry_date < (DATE(%s) + INTERVAL 7 DAY);"
+        val = (user_id, entry_date, entry_date)
         cursor.execute(query, val)
         result = cursor.fetchall()
         if len(result) == 0:

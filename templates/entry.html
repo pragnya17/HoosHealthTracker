@@ -7,18 +7,18 @@
         <div class="row">
             <div class="form-group col">
             <label for="date">Date</label>
-            <input type="date" class="form-control" name="date" id="date">
+            <input type="date" class="form-control" name="date" id="date" required>
             </div>
             <div class="form-group col text-center">
                 <label>How are you feeling?</label> 
                 <br>
-                <input class="form-check-input" type="radio" name="mood" id="happy" value="2">
+                <input class="form-check-input" type="radio" name="mood" id="happy" value="2" required>
                 <label class="form-check-label h1" for="2">&#128526;</label>
 
-                <input class="form-check-input" type="radio" name="mood" id="mid" value="1">
+                <input class="form-check-input" type="radio" name="mood" id="mid" value="1" required>
                 <label class="form-check-label h1" for="1">&#128528;</label>
 
-                <input class="form-check-input" type="radio" name="mood" id="sad" value="0">
+                <input class="form-check-input" type="radio" name="mood" id="sad" value="0" required>
                 <label class="form-check-label h1" for="0">&#128577;</label>
             </div>
         </div>
@@ -26,11 +26,11 @@
         <div class="row mt-3">
             <div class="form-group col">
                 <label for="exercise">Minutes of Exercise</label>
-                <input class="form-control" type="number" name="exercise_duration" id="exercise" min="0">
+                <input class="form-control" type="number" name="exercise_duration" id="exercise" min="0" required>
             </div>
             <div class="form-group col">
                 <label for="intensity">Exercise Intensity</label>
-                <select class="form-select" name="exercise_intensity" id="intensity">
+                <select class="form-select" name="exercise_intensity" id="intensity" required>
                     <option value="1">Low</option>
                     <option value="2">Moderate</option>
                     <option value="3">Vigorous</option>
@@ -38,48 +38,48 @@
             </div>
             <div class="form-group col">
                 <label for="exercise_type">Type of Exercise</label>
-                <input class="form-control" type="text" name="exercise_type" id="exercise_type">
+                <input class="form-control" type="text" name="exercise_type" id="exercise_type" required>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="form-group col">
                 <label for="calories">Calories</label>
-                <input class="form-control" type="number" name="calories" id="calories" min="0">
+                <input class="form-control" type="number" name="calories" id="calories" min="0" required>
             </div>
             <div class="form-group col">
                 <label for="carbs">Carbs (g)</label>
-                <input class="form-control" type="number" name="carbs" id="carbs" min="0">
+                <input class="form-control" type="number" name="carbs" id="carbs" min="0" required>
             </div>
             <div class="form-group col">
                 <label for="fat">Fat (g)</label>
-                <input class="form-control" type="number" name="fat" id="fat" min="0">
+                <input class="form-control" type="number" name="fat" id="fat" min="0" required>
             </div>
             <div class="form-group col">
                 <label for="protein">Protein (g)</label>
-                <input class="form-control" type="number" name="protein" id="protein" min="0">
+                <input class="form-control" type="number" name="protein" id="protein" min="0" required>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="form-group col">
                 <label for="weight">Weight (lbs)</label>
-                <input class="form-control" type="number" name="weight" id="weight" min="0">
+                <input class="form-control" type="number" name="weight" id="weight" min="0" required>
             </div>
             <div class="form-group col">
                 <label for="sleep">Hours of Sleep</label>
-                <input class="form-control" type="number" name="sleep" id="sleep" min="0">
+                <input class="form-control" type="number" name="sleep" id="sleep" min="0" required>
             </div>
         </div>
 
         <div class="row mt-3">
             <label for="comments">Comments</label>
-            <textarea class="form-control" type="text" name="comments" id="comments"></textarea>
+            <textarea class="form-control" type="text" name="comments" id="comments" required></textarea>
         </div>
 
         <div class="row mt-4">
             <div class="form-group col text-center">
-                <input type="submit" value="SUBMIT" name="btnAction" class="btn btn-primary" title="submit entry">
+                <input type="submit" value="SUBMIT" name="btnAction" class="btn btn-primary" title="submit entry" >
             </div>
         </div>
     </form>
