@@ -28,22 +28,17 @@ hr {
 
     <div class="row d-flex justify-content-center text-center w-100">
         <div class="col">
-
             <div class="card">
                 <h5 class="card-header">Mood</h5>
                 <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text">
-                    <ul>
-
                         {% for entry in emotionResult %}
 
-                        <p><a href="/mood_update/{{ entry['entry_date'] }}" class="bg-light">{{entry['entry_date']}}</a></p>
+                        <p class="bg-light"><a href="/mood_update/{{ entry['entry_date'] }}">{{entry['entry_date']}}</a></p>
 
                         {% if entry['mood'] == NULL %}
                         {% endif %}
                         {% if entry['mood'] == 0 %}
-                         <b>Feeling: </b>   &#128577; <hr/>
+                        <b>Feeling: </b>   &#128577; <hr/>
                         {% endif %}
                         {% if entry['mood'] == 1  %}
                         <b>Feeling: </b>     &#128528;<hr/>
@@ -52,26 +47,20 @@ hr {
                         <b>Feeling: </b>    &#128526;<hr/>
                         {% endif %}
                         {% endfor %}
-                        
-                        </ul>
-                  </p>
-
                 </div>
-              </div>           
+            </div>           
         </div>
 
         <div class="col">
             <div class="card">
                 <h5 class="card-header">Food</h5>
                 <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text">
                     {% for entry in foodResult %}
 
                     <p class="bg-light"><a href="/food_update/{{entry['entry_date']}}">{{entry['entry_date']}}</a></p>
                     {% if entry['total_calories'] == NULL %}
                     {% else %}
-                    <dl class="row">
+                    <dl class="row mb-0">
 
                     <dt class="col-sm-6">Calories: </dt>  
                     <dd class="col-sm-4">{{entry['total_calories']}} cal</dd>
@@ -92,28 +81,21 @@ hr {
                     <dd class="col-sm-4">{{entry['total_protein']}} g</dd> <hr/> 
 
                     {% endif %}
-
                     </dl>
                     {% endfor %}
-                    </ul>
-              </p>
-
                 </div>
               </div>           
-            
         </div>
-        <div class="col">
 
+        <div class="col">
             <div class="card">
                 <h5 class="card-header">Exercise</h5>
                 <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text">
                     {% for entry in exerciseResult %}
                     <p class="bg-light"><a href="/exercise_update/{{entry['entry_date']}}">{{entry['entry_date']}}</a></p>
                     {% if entry['duration'] == NULL %}
                     {% else %}
-                    <dl class="row">
+                    <dl class="row mb-0">
                     <dt class="col-sm-6">Duration: </dt>  
                     <dd class="col-sm-6">{{entry['duration']}} minutes</dd>
                     {% endif %}
@@ -130,20 +112,14 @@ hr {
 
                     </dl>
                     {% endfor %}
-                    </ul>
-              </p>
                 </div>
               </div>           
-            
         </div>
 
         <div class="col">
-
             <div class="card">
                 <h5 class="card-header">Sleep</h5>
                 <div class="card-body">
-                  <h5 class="card-title"></h5>
-                  <p class="card-text">
                     {% for entry in sleepResult %}
                      
                     <p class="bg-light"><a href="/sleep_update/{{ entry['entry_date'] }}">{{entry['entry_date']}}</a></p>
@@ -159,11 +135,8 @@ hr {
                     {%endif%}
 
                     {% endfor %}
-              </p>
-
                 </div>
               </div>           
-            
         </div>
 
     </div>
