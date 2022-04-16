@@ -40,17 +40,17 @@ hr {
 
                         <p><a href="/mood_update/{{ entry['entry_date'] }}" class="bg-light">{{entry['entry_date']}}</a></p>
 
+                        {% if entry['mood'] == NULL %}
+                        {% endif %}
                         {% if entry['mood'] == 0 %}
-                         <b>Feeling: </b>   &#128577; 
+                         <b>Feeling: </b>   &#128577; <hr/>
                         {% endif %}
                         {% if entry['mood'] == 1  %}
-                        <b>Feeling: </b>     &#128528;
+                        <b>Feeling: </b>     &#128528;<hr/>
                         {% endif %}
                         {% if entry['mood'] ==  2 %}
-                        <b>Feeling: </b>    &#128526;
+                        <b>Feeling: </b>    &#128526;<hr/>
                         {% endif %}
-                        <hr/>
-
                         {% endfor %}
                         
                         </ul>
@@ -58,29 +58,41 @@ hr {
 
                 </div>
               </div>           
-            
         </div>
 
         <div class="col">
-
             <div class="card">
                 <h5 class="card-header">Food</h5>
                 <div class="card-body">
                   <h5 class="card-title"></h5>
                   <p class="card-text">
                     {% for entry in foodResult %}
-                    <dl class="row">
 
                     <p class="bg-light"><a href="/food_update/{{entry['entry_date']}}">{{entry['entry_date']}}</a></p>
+                    {% if entry['total_calories'] == NULL %}
+                    {% else %}
+                    <dl class="row">
+
                     <dt class="col-sm-6">Calories: </dt>  
                     <dd class="col-sm-4">{{entry['total_calories']}} cal</dd>
+                    {% endif %}
+                    {% if entry['total_fat'] == NULL %}
+                    {% else %}
                     <dt class="col-sm-6">Fat: </dt>  
                     <dd class="col-sm-4">{{entry['total_fat']}} g</dd>
+                    {% endif %}
+                    {% if entry['total_carbs'] == NULL %}
+                    {% else %}
                     <dt class="col-sm-6">Carbs: </dt>  
-                    <dd class="col-sm-4"> {{entry['total_carbs']}} g</dd>
+                    <dd class="col-sm-4">{{entry['total_carbs']}} g</dd>
+                    {% endif %}
+                    {% if entry['total_carbs'] == NULL %}
+                    {% else %}
                     <dt class="col-sm-6">Protein: </dt>  
-                    <dd class="col-sm-4"> {{entry['total_protein']}} g</dd>
-                    <hr/>
+                    <dd class="col-sm-4">{{entry['total_protein']}} g</dd> <hr/> 
+
+                    {% endif %}
+
                     </dl>
                     {% endfor %}
                     </ul>
@@ -98,16 +110,24 @@ hr {
                   <h5 class="card-title"></h5>
                   <p class="card-text">
                     {% for entry in exerciseResult %}
-                    <dl class="row">
-
                     <p class="bg-light"><a href="/exercise_update/{{entry['entry_date']}}">{{entry['entry_date']}}</a></p>
+                    {% if entry['duration'] == NULL %}
+                    {% else %}
+                    <dl class="row">
                     <dt class="col-sm-6">Duration: </dt>  
                     <dd class="col-sm-6">{{entry['duration']}} minutes</dd>
+                    {% endif %}
+                    {% if entry['intensity'] == NULL %}
+                    {% else %}
                     <dt class="col-sm-6">Intensity: </dt>  
                     <dd class="col-sm-4">{{entry['intensity']}}</dd>
+                    {% endif %}
+                    {% if entry['type'] == NULL %}
+                    {% else %}
                     <dt class="col-sm-6">Type: </dt>  
-                    <dd class="col-sm-4"> {{entry['type']}}</dd>
-                    <hr/>
+                    <dd class="col-sm-4"> {{entry['type']}}</dd><hr/>
+                    {% endif %}
+
                     </dl>
                     {% endfor %}
                     </ul>
@@ -128,13 +148,15 @@ hr {
                      
                     <p class="bg-light"><a href="/sleep_update/{{ entry['entry_date'] }}">{{entry['entry_date']}}</a></p>
 
-
+                    {% if entry['duration'] == NULL %}
+                    {% else %}
                     <dl class="row">
 
                     <dt class="col-sm-6">Sleep Duration: </dt>  
                     <dd class="col-sm-4">{{entry['duration']}} hours</dd>
-                    </dl>
-                    <hr/>
+                    </dl>                    <hr/>
+
+                    {%endif%}
 
                     {% endfor %}
               </p>
