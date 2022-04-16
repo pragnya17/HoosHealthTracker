@@ -50,39 +50,7 @@ def main():
         exerciseResult = db.getExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         foodResult = db.getFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
-
-        # get these from main.html? for update/delete
-        comment = 0
-        mood = 0
-        # print(mood)
-        intensity = 0
-        duration = 0
-        type = 0
-        sleep = 0
-        calories = 0
-        fat = 0
-        carbs = 0
-        protein = 0
-        weight = 0
- 
-        # for update/delete buttons on main.html
-        if request.method == "POST":              
-            # if updating an entry
-            if request.form["btnAction"] == "Update":
-                db.updateEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, mood)
-                db.updateExerciseEntry(user_id,  datetime.now().strftime('%Y-%m-%d'), comment, intensity, duration, type)
-                db.updateSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, sleep)
-                db.updateFoodEntry(user_id, datetime.now().strftime('%Y-%m-%d'), comment, calories, fat, carbs, protein, weight)
-           
-            # if deleting an entry
-            if request.form["btnAction"] == "Delete":
-                db.deleteEmotionEntry(user_id,   datetime.now().strftime('%Y-%m-%d'))
-                db.deleteExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
-                db.deleteSleepEntry(user_id,  datetime.now().strftime('%Y-%m-%d'))
-                db.deleteFoodEntry(user_id,  datetime.now().strftime('%Y-%m-%d'), calories, fat, carbs, protein)
-
         return render_template("main.html", emotionResult=emotionResult, exerciseResult=exerciseResult, sleepResult=sleepResult, foodResult=foodResult)
-    
     else:
         return redirect(url_for('login'))
 
@@ -91,8 +59,7 @@ def main():
 def profile():
     if user_id != -1:
         first_name, last_name, height, date_of_birth = db.get_user(user_id)
-        return render_template("profile.html", first_name=first_name, last_name=last_name,
-                               height=height, date_of_birth=date_of_birth)
+        return render_template("profile.html", first_name=first_name, last_name=last_name, height=height, date_of_birth=date_of_birth)
     else:
         return redirect(url_for('login'))
 
@@ -103,19 +70,20 @@ def entry():
 
     if user_id == -1:
         return redirect(url_for('login'))
+
     if request.method == "POST":
-        # Example of retrieving data from form (need both for every entry)
+        # All entries
         date = request.form['date']
         comment = request.form['comments']
-        # emotion entry
+        # Emotion entry
         mood = request.form['mood']
-        # sleep entry
+        # Sleep entry
         sleep = request.form['sleep']
-        # exercise entry
+        # Exercise entry
         intensity = request.form['exercise_intensity']
         duration = request.form['exercise_duration']
         type = request.form['exercise_type']
-        # food entry
+        # Food entry
         calories = request.form['calories']
         fat = request.form['fat']
         carbs = request.form['carbs']
@@ -226,7 +194,6 @@ def nutrition_info(food_id):
 
     if len(food) == 0 or len(nutrients) == 0:
         return render_template("food_nutrition_error.html")
-
 
     # The data has some repetitiveness in how it displays serving size in
     # the household_serving_fulltext and serving_size columns, so here we eliminate that
