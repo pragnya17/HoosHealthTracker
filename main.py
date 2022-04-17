@@ -101,9 +101,9 @@ def entry():
         weight = request.form['weight']
 
         db.storeEmotionEntry(user_id, date, comment, mood)
-        db.storeSleepEntry(user_id, date, comment, sleep)
-        db.storeExerciseEntry(user_id, date, comment, intensity, duration, type)
-        db.storeFoodEntry(user_id, date, comment, calories, fat, carbs, protein, weight)
+        db.storeSleepEntry(user_id, date, "", sleep)
+        db.storeExerciseEntry(user_id, date, "", intensity, duration, type)
+        db.storeFoodEntry(user_id, date, "", calories, fat, carbs, protein, weight)
         
     return render_template("entry.html")
 
