@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  
+<script src="script.js"></script>
   <h1 class="text-center mt-3">Sign Up</h1>
 <div class="container-lg mx-auto mt-4 w-50">
     <form method="post">
@@ -23,7 +23,24 @@
 
         <div class="row mt-3">
             <label for="date_of_birth">Date of Birth</label>
-            <input class="form-control" type="date" name="date_of_birth" id="date_of_birth" required></input>
+            <div id="datefield">
+                <script>
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; 
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) {
+                    dd = '0' + dd;
+                    }
+                    if (mm < 10) {
+                    mm = '0' + mm;
+                    } 
+                    today = yyyy + '-' + mm + '-' + dd;
+                    document.getElementById("datefield").setAttribute("max", today);
+                </script>
+            </div>
+            <input class="form-control" type="date" name="date_of_birth" id="datefield" min="1901-01-01" max="3000-01-01" onfocus= "this.max=new Date().toISOString().split('T')[0]" required ></input>
+
         </div>
 
         <div class="row mt-3">
