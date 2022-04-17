@@ -32,8 +32,8 @@
                 <label for="intensity">Exercise Intensity</label>
                 <select class="form-select" name="exercise_intensity" id="intensity" required>
                     <option value="1">Low</option>
-                    <option value="2">Moderate</option>
-                    <option value="3">Vigorous</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
                 </select>
             </div>
             <div class="form-group col">
@@ -73,7 +73,7 @@
         </div>
 
         <div class="row mt-3">
-            <label for="comments">Comments</label>
+            <label for="comments">Share reflections about your day</label>
             <textarea class="form-control" type="text" name="comments" id="comments" required></textarea>
         </div>
 
@@ -84,4 +84,8 @@
         </div>
     </form>
 </div>
+
+<!--- Used solution to https://stackoverflow.com/questions/32378590/set-date-input-fields-max-date-to-today here
+to restrict max value of date input-->
+<script>date.max = new Date().toISOString().split("T")[0];</script>
 {% endblock %}

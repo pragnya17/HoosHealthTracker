@@ -38,13 +38,19 @@ hr {
                         {% if entry['mood'] == NULL %}
                         {% endif %}
                         {% if entry['mood'] == 0 %}
-                        <b>Feeling: </b>   &#128577; <hr/>
+                        <b>Feeling: </b>   &#128577;
                         {% endif %}
                         {% if entry['mood'] == 1  %}
-                        <b>Feeling: </b>     &#128528;<hr/>
+                        <b>Feeling: </b>     &#128528;
                         {% endif %}
                         {% if entry['mood'] ==  2 %}
-                        <b>Feeling: </b>    &#128526;<hr/>
+                        <b>Feeling: </b>    &#128526;
+                        {% endif %}
+
+                        {% if entry['mood'] == NULL %}
+                        {% else %}
+                        <p> {{ entry['comments'] }} </p>
+                        <hr>
                         {% endif %}
                         {% endfor %}
                 </div>
@@ -63,7 +69,7 @@ hr {
                     <dl class="row mb-0">
 
                     <dt class="col-sm-6">Calories: </dt>  
-                    <dd class="col-sm-4">{{entry['total_calories']}} cal</dd>
+                    <dd class="col-sm-4">{{entry['total_calories']}}</dd>
                     {% endif %}
                     {% if entry['total_fat'] == NULL %}
                     {% else %}
@@ -102,7 +108,13 @@ hr {
                     {% if entry['intensity'] == NULL %}
                     {% else %}
                     <dt class="col-sm-6">Intensity: </dt>  
-                    <dd class="col-sm-4">{{entry['intensity']}}</dd>
+                    {% if entry['intensity'] == 1 %}
+                    <dd class="col-sm-4">Low</dd>
+                    {% elif entry['intensity'] == 2 %}
+                    <dd class="col-sm-4">Med</dd>
+                    {% elif entry['intensity'] == 3 %}
+                    <dd class="col-sm-4">High</dd> 
+                    {% endif %}
                     {% endif %}
                     {% if entry['type'] == NULL %}
                     {% else %}
@@ -127,7 +139,7 @@ hr {
                     {% else %}
                     <dl class="row">
 
-                    <dt class="col-sm-6">Sleep Duration: </dt>  
+                    <dt class="col-sm-6">Duration: </dt>  
                     <dd class="col-sm-4">{{entry['duration']}} hours</dd>
                     </dl>                    <hr/>
 

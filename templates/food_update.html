@@ -6,22 +6,27 @@
     <form method="post">
         <div class="row">
             <label for="calories">Calories</label>
-            <input class="form-control" type="number" name="calories" id="calories" min="0" value="{{ foodResult['total_calories'] }}" placeholder="{{ foodResult['total_calories'] }}">
+            <input class="form-control" type="number" name="calories" id="calories" min="0" value="{{ foodResult['total_calories'] }}" placeholder="{{ foodResult['total_calories'] }}" required>
         </div>
 
         <div class="row">
             <label for="carbs">Carbs (g)</label>
-            <input class="form-control" type="number" name="carbs" id="carbs" min="0" value="{{ foodResult['total_carbs'] }}" placeholder="{{ foodResult['total_carbs'] }}">
+            <input class="form-control" type="number" name="carbs" id="carbs" min="0" value="{{ foodResult['total_carbs'] }}" placeholder="{{ foodResult['total_carbs'] }}" required>
         </div>
 
         <div class="row">
             <label for="fat">Fat (g)</label>
-            <input class="form-control" type="number" name="fat" id="fat" min="0" value="{{ foodResult['total_fat'] }}" placeholder="{{ foodResult['total_fat'] }}">
+            <input class="form-control" type="number" name="fat" id="fat" min="0" value="{{ foodResult['total_fat'] }}" placeholder="{{ foodResult['total_fat'] }}" required>
         </div>
 
         <div class="row">
             <label for="protein">Protein (g)</label>
-            <input class="form-control" type="number" name="protein" id="protein" min="0" value="{{ foodResult['total_protein'] }}" placeholder="{{ foodResult['total_protein'] }}">
+            <input class="form-control" type="number" name="protein" id="protein" min="0" value="{{ foodResult['total_protein'] }}" placeholder="{{ foodResult['total_protein'] }}" required>
+        </div>
+
+        <div class="row">
+            <label for="weight">Weight (lbs)</label>
+            <input class="form-control" type="number" name="weight" id="weight" min="0" value="{{ foodResult['weight'] }}" required>
         </div>
 
         <div class="row mt-4">

@@ -125,7 +125,8 @@ def food_entry_update(date):
             carbs = request.form['carbs']
             protein = request.form['protein']
             fat = request.form['fat']
-            db.updateFoodEntry(user_id, date, "dummy_str", calories, fat, carbs, protein, 10)
+            weight = request.form['weight']
+            db.updateFoodEntry(user_id, date, "", calories, fat, carbs, protein, weight)
 
         if request.form["btnAction"] == "DELETE":
             db.deleteFoodEntry(user_id, date)
@@ -170,7 +171,7 @@ def exercise_entry_update(date):
             intensity = request.form['exercise_intensity']
             duration = request.form['exercise_duration']
             type = request.form['exercise_type']
-            db.updateExerciseEntry(user_id, date, "dummy_str", intensity, duration, type)
+            db.updateExerciseEntry(user_id, date, "", intensity, duration, type)
 
         if request.form["btnAction"] == "DELETE":
             db.deleteExerciseEntry(user_id, date)
@@ -191,7 +192,7 @@ def sleep_entry_update(date):
     if request.method == "POST":
         if request.form["btnAction"] == "UPDATE":
             duration = request.form['sleep']
-            db.updateSleepEntry(user_id, date, "dummy_str", duration)
+            db.updateSleepEntry(user_id, date, "", duration)
 
         if request.form["btnAction"] == "DELETE":
             db.deleteSleepEntry(user_id, date)
