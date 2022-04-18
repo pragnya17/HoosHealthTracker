@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from db_secrets import secrets
 import db
 import hashlib
@@ -7,13 +7,13 @@ import nutr_calc
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
+app.secret_key = 'example secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 
-user_id = -1 # -1 means no one is logged in
+#user_id = -1 # -1 means no one is logged in
 
 @app.route("/", methods=["POST", "GET"])
 def login():
-    global user_id
-
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -22,7 +22,7 @@ def login():
 
         for user in users:
             if email == user["email"] and hashed_password == user["password"]:
-                user_id = user["user_id"]
+                session['user_id'] = user["user_id"]
                 return redirect(url_for('main'))
 
     return render_template("login.html")
@@ -45,17 +45,17 @@ def sign_up():
 
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
-    global user_id
-    if user_id == -1:
-        return redirect(url_for('login'))
-    else:
-        user_id = -1
+    if session['user_id']:
+        session.pop('user_id', None)
         return render_template("logout.html")
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route("/main")
 def main():
-    if user_id != -1:
+    if session['user_id']:
+        user_id = session['user_id']
         emotionResult = db.getEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         exerciseResult = db.getExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         sleepResult = db.getSleepEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
@@ -67,7 +67,8 @@ def main():
 
 @app.route("/profile")
 def profile():
-    if user_id != -1:
+    if session['user_id']:
+        user_id = session['user_id']
         first_name, last_name, height, date_of_birth = db.get_user(user_id)
         return render_template("profile.html", first_name=first_name, last_name=last_name, height=height, date_of_birth=date_of_birth)
     else:
@@ -76,11 +77,10 @@ def profile():
 
 @app.route("/entry", methods=["POST", "GET"])
 def entry():
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
+    user_id = session['user_id']
     if request.method == "POST":
         # All entries
         date = request.form['date']
@@ -110,11 +110,10 @@ def entry():
 
 @app.route("/food_update/<date>", methods=["POST", "GET"])
 def food_entry_update(date):
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
+    user_id = session['user_id']
     if request.method == "GET":
         foodResult = db.get_single_food_entry(user_id, date)    
         return render_template("food_update.html", date=date, foodResult=foodResult)
@@ -134,11 +133,10 @@ def food_entry_update(date):
 
 @app.route("/mood_update/<date>", methods=["POST", "GET"])
 def mood_entry_update(date):
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
+    user_id = session['user_id']
     if request.method == "GET":
         moodResult = db.get_single_emotion_entry(user_id, date)    
         return render_template("mood_update.html", date=date, moodResult=moodResult)
@@ -156,11 +154,10 @@ def mood_entry_update(date):
 
 @app.route("/exercise_update/<date>", methods=["POST", "GET"])
 def exercise_entry_update(date):
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
+    user_id = session['user_id']
     if request.method == "GET":
         exerciseResult = db.get_single_exercise_entry(user_id, date)    
         return render_template("exercise_update.html", date=date, exerciseResult=exerciseResult)
@@ -179,11 +176,10 @@ def exercise_entry_update(date):
 
 @app.route("/sleep_update/<date>", methods=["POST", "GET"])
 def sleep_entry_update(date):
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
+    user_id = session['user_id']
     if request.method == "GET":
         sleepResult = db.get_single_sleep_entry(user_id, date)
         return render_template("sleep_update.html", date=date, sleepResult=sleepResult)
@@ -201,9 +197,7 @@ def sleep_entry_update(date):
 
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
     if request.method == "GET":
@@ -215,9 +209,7 @@ def food_search():
 
 @app.route("/search_result", methods=["POST"])
 def search_result():
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
     if request.method == "POST":
@@ -229,9 +221,7 @@ def search_result():
       
 @app.route("/nutrition_info/<food_id>")
 def nutrition_info(food_id):
-    global user_id
-
-    if user_id == -1:
+    if not session['user_id']:
         return redirect(url_for('login'))
 
     # Retrieve food and nutrient info from database
@@ -270,5 +260,8 @@ def nutrition_info(food_id):
 
 # For debugging - just run file from terminal and any saved changes will be updated in browser
 # without having to restart the program.
+
+
 if __name__ == '__main__':
+    #sess.init_app(app)
     app.run(debug=True)
