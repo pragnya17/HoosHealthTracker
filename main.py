@@ -24,10 +24,9 @@ def login():
             if email == user["email"] and hashed_password == user["password"]:
                 user_id = user["user_id"]
                 return redirect(url_for('main'))
-<<<<<<< Updated upstream
-=======
+
         return redirect(url_for('incorrect_login'))
->>>>>>> Stashed changes
+
 
     return render_template("login.html")
 
