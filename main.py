@@ -24,8 +24,15 @@ def login():
             if email == user["email"] and hashed_password == user["password"]:
                 session['user_id'] = user["user_id"]
                 return redirect(url_for('main'))
+            else:
+                return redirect(url_for('incorrect_login'))
 
     return render_template("login.html")
+
+
+@app.route("/incorrect_login")
+def incorrect_login():
+    return render_template("incorrect_login.html")
 
 
 @app.route("/sign_up", methods=["POST", "GET"])
@@ -45,7 +52,7 @@ def sign_up():
 
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
-    if session['user_id']:
+    if 'user_id' in session and session['user_id']:
         session.pop('user_id', None)
         return render_template("logout.html")
     else:
@@ -54,7 +61,7 @@ def logout():
 
 @app.route("/main")
 def main():
-    if session['user_id']:
+    if 'user_id' in session and session['user_id']:
         user_id = session['user_id']
         emotionResult = db.getEmotionEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
         exerciseResult = db.getExerciseEntry(user_id, datetime.now().strftime('%Y-%m-%d'))
@@ -67,7 +74,7 @@ def main():
 
 @app.route("/profile")
 def profile():
-    if session['user_id']:
+    if 'user_id' in session and session['user_id']:
         user_id = session['user_id']
         first_name, last_name, height, date_of_birth = db.get_user(user_id)
         return render_template("profile.html", first_name=first_name, last_name=last_name, height=height, date_of_birth=date_of_birth)
@@ -77,7 +84,7 @@ def profile():
 
 @app.route("/entry", methods=["POST", "GET"])
 def entry():
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -110,7 +117,7 @@ def entry():
 
 @app.route("/food_update/<date>", methods=["POST", "GET"])
 def food_entry_update(date):
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -133,7 +140,7 @@ def food_entry_update(date):
 
 @app.route("/mood_update/<date>", methods=["POST", "GET"])
 def mood_entry_update(date):
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -154,7 +161,7 @@ def mood_entry_update(date):
 
 @app.route("/exercise_update/<date>", methods=["POST", "GET"])
 def exercise_entry_update(date):
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -176,7 +183,7 @@ def exercise_entry_update(date):
 
 @app.route("/sleep_update/<date>", methods=["POST", "GET"])
 def sleep_entry_update(date):
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -197,7 +204,7 @@ def sleep_entry_update(date):
 
 @app.route("/food_search", methods=["POST", "GET"])
 def food_search():
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     if request.method == "GET":
@@ -209,7 +216,7 @@ def food_search():
 
 @app.route("/search_result", methods=["POST"])
 def search_result():
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     if request.method == "POST":
@@ -221,7 +228,7 @@ def search_result():
       
 @app.route("/nutrition_info/<food_id>")
 def nutrition_info(food_id):
-    if not session['user_id']:
+    if not ('user_id' in session and session['user_id']):
         return redirect(url_for('login'))
 
     # Retrieve food and nutrient info from database
@@ -263,5 +270,4 @@ def nutrition_info(food_id):
 
 
 if __name__ == '__main__':
-    #sess.init_app(app)
     app.run(debug=True)
